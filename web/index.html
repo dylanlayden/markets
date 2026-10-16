@@ -27,9 +27,9 @@
 
   <main class="wrap">
     <section class="hero">
-      <p class="eyebrow">Research dashboards · Public data · Rebuilt daily</p>
+      <p class="eyebrow">Selected research dashboards</p>
       <h1>Markets Research Terminal</h1>
-      <p class="deck">Five research dashboards on rates and credit, real estate, gold, and one crypto exchange's cash flows. Each one is built from raw public data by a Python analytics backend I wrote, then published here as a read-only snapshot.</p>
+      <p class="deck">A selection of the dashboards I use to follow rates and credit, real estate, gold and digital-asset cash flows. They bring the public data I track into one place and present it visually, so conditions can be read at a glance. The snapshot refreshes daily.</p>
       <div class="byline">
         <span>By <b>Dylan Layden</b></span>
         <span id="asof" class="asof"></span>
@@ -46,11 +46,11 @@
       <h2 class="section-label">About this project</h2>
       <div class="about-grid">
         <div>
-          <h3>Why I built it</h3>
-          <p>I wanted one place to read the conditions that drive credit and real-estate risk: where rates and spreads are, how the economy and labor market are trending, and what property values, rents and yields are doing down to the San Francisco ZIP-code level. The gold and crypto dashboards apply the same approach to markets I follow: supply and demand, who holds the asset, and what it earns.</p>
+          <h3>Purpose</h3>
+          <p>The dashboards keep the conditions behind credit and real-estate risk in one view: the level and shape of rates and spreads, the direction of growth and the labor market, and property values, rents and yields down to the San Francisco ZIP-code level. The gold and digital-asset dashboards apply the same framework to supply and demand, ownership and earnings.</p>
         </div>
         <div>
-          <h3>How it's built</h3>
+          <h3>Method</h3>
           <p>Each dashboard is a Python module that fetches and caches its sources, runs the calculations (index rebasing, rolling betas, yield and multiple math, concentration indices, supply/demand balances), and returns Plotly figures, tables or written reads through FastAPI. The same backend originally powered these dashboards inside OpenBB Workspace. A build script snapshots every tile into this static site, checks each one for errors and keeps the last good version if a source fails.</p>
         </div>
         <div>

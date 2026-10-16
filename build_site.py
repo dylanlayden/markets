@@ -51,45 +51,46 @@ SHOWCASE = [
         "slug": "macro",
         "blurb": "US rates, credit, inflation, growth, labor and global yields — 20 charts with recession shading.",
         "sources": "FRED (Federal Reserve Bank of St. Louis) via OpenBB Platform; NBER recession dates.",
-        "preview": {"tile": "macro_credit_spreads", "fmt": "pct",
-                    "series": [["US High Yield", "High yield"], ["US Investment Grade", "Investment grade"]],
-                    "caption": "US corporate option-adjusted spreads, %"},
+        "preview": {"tile": "macro_yield_curve", "kind": "curve", "fmt": "pct",
+                    "series": [["Today", "Today"], ["1Y ago", "1 year ago"]],
+                    "caption": "US Treasury yield curve"},
     },
     {
         "name": "Housing & SF Real Estate",
         "slug": "housing",
         "blurb": "US housing macro down to San Francisco ZIP codes: prices, momentum, rents and gross yields.",
         "sources": "FRED (S&P CoreLogic Case-Shiller, Realtor.com, Freddie Mac, BLS); Zillow Research (ZHVI, ZORI); Redfin Data Center.",
-        "preview": {"tile": "re_sf_caseshiller", "fmt": "index",
-                    "series": [["Case-Shiller SF", "San Francisco"]],
-                    "caption": "S&P CoreLogic Case-Shiller San Francisco home price index (Jan 2000 = 100)"},
+        "preview": {"tile": "re_us_mortgage", "kind": "line", "fmt": "pct",
+                    "series": [["30Y fixed", "30-year"], ["15Y fixed", "15-year"]],
+                    "caption": "US fixed mortgage rates"},
     },
     {
         "name": "Gold Market",
         "slug": "gold",
         "blurb": "Gold supply and demand, central-bank buying, ETF flows, futures positioning and producers.",
         "sources": "World Gold Council (Goldhub); LBMA; CFTC; Yahoo Finance.",
-        "preview": {"tile": "gd_aisc", "fmt": "usd",
-                    "series": [["Gold price (quarterly avg)", "Gold price"], ["All-in sustaining cost", "Miners' all-in cost"]],
-                    "caption": "Gold price vs producers' all-in sustaining cost, US$/oz, quarterly"},
+        "preview": {"tile": "gd_sankey", "kind": "flow", "fmt": "tonnes",
+                    "caption": "Gold supply to demand, trailing four quarters"},
     },
     {
         "name": "Gold Price Formation",
         "slug": "gold-price",
         "blurb": "Who sets the gold price: COT positioning, trader concentration, 13F holders and the COMEX–London basis.",
         "sources": "CFTC Commitments of Traders; SEC Form 13F data sets; LBMA; Yahoo Finance.",
-        "preview": {"tile": "gp_cot_percentile", "fmt": "pct",
-                    "series": [["Managed-money net long", "Managed money"]],
-                    "caption": "COMEX gold managed-money net long, % of open interest, weekly"},
+        "preview": {"tile": "gp_cot_stack", "kind": "bars", "fmt": "tonnes",
+                    "series": [["Producer / merchant", "Producers"], ["Swap dealers", "Swap dealers"],
+                               ["Managed money", "Managed money"],
+                               [["Other reportables", "Non-reportable (small)"], "Other"]],
+                    "caption": "COMEX gold net position by trader category"},
     },
     {
         "name": "HYPE · Hyperliquid Cash Flow",
         "slug": "hype",
         "blurb": "Hyperliquid valued as a cash-flowing asset: fees, revenue, buybacks, multiples and market structure.",
         "sources": "DefiLlama; Hyperliquid public info API; CoinGecko; OKX; FRED.",
-        "preview": {"tile": "hy_fees_rev", "fmt": "usdm",
-                    "series": [["Fees 30d avg", "Fees"], ["Revenue 30d avg", "Revenue"]],
-                    "caption": "Hyperliquid daily fees and protocol revenue, 30-day average, US$"},
+        "preview": {"tile": "hy_buyback_yield", "kind": "line", "fmt": "pct",
+                    "series": [["Buyback yield (30d-annualised rev ÷ mkt cap)", "Buyback yield"]],
+                    "caption": "HYPE buyback yield, annualized"},
     },
 ]
 
@@ -105,25 +106,67 @@ def decode(v):
     return v
 
 
+def _thin(pts: list, n: int = PREVIEW_POINTS) -> list:
+    """Every k-th point so about n remain, always keeping the latest."""
+    step = max(1, -(-len(pts) // n))
+    keep = pts[::step]
+    return keep if keep[-1] == pts[-1] else keep + [pts[-1]]
+
+
 def build_preview(cfg: dict, tiles: list[dict], outdir: Path) -> dict | None:
-    """Small line series for the homepage card, taken from one of the app's own charts."""
+    """Small chart for the homepage card, taken from one of the app's own charts.
+
+    kind  line  — time series, one or two lines
+          curve — numeric x with tick labels (yield curve), one or two lines
+          bars  — stacked +/- bars over time; a series may sum several traces
+          flow  — two-stage Sankey (supply parts → total → demand parts)
+    """
     pc = cfg.get("preview")
     if not pc:
         return None
     try:
         tile = next(t for t in tiles if t["id"] == pc["tile"])
         fig = json.loads((outdir / tile["variants"][tile["default"]]).read_text())
+        out = {"kind": pc["kind"], "caption": pc["caption"], "fmt": pc["fmt"], "tile": tile["name"]}
+
+        if pc["kind"] == "flow":
+            d = fig["data"][0]
+            labels = [re.sub(r"\s*\(residual\)", "", l.split("<br>")[0]) for l in d["node"]["label"]]
+            src, tgt, val = (decode(d["link"][k]) for k in ("source", "target", "value"))
+            hub = max(set(tgt), key=tgt.count)  # the node every supply link flows into
+            out["supply"] = [{"label": labels[a], "value": round(v, 1)} for a, b, v in zip(src, tgt, val) if b == hub]
+            out["demand"] = [{"label": labels[b], "value": round(v, 1)} for a, b, v in zip(src, tgt, val) if a == hub]
+            return out
+
         traces = {d.get("name"): d for d in fig["data"]}
+        if pc["kind"] == "curve":
+            ax = fig["layout"].get("xaxis", {})
+            out["ticks"] = {"vals": ax.get("tickvals"), "text": ax.get("ticktext"), "log": ax.get("type") == "log"}
+            out["series"] = [{"label": label, "x": decode(traces[name]["x"]),
+                              "y": [round(v, 4) for v in decode(traces[name]["y"])]} for name, label in pc["series"]]
+            return out
+
+        if pc["kind"] == "bars":
+            x = [str(v)[:10] for v in decode(traces[pc["series"][0][0]]["x"])]
+            cols = []
+            for names, label in pc["series"]:
+                names = names if isinstance(names, list) else [names]
+                ys = [decode(traces[n]["y"]) for n in names]
+                cols.append((label, [sum(v for v in vals if v == v) for vals in zip(*ys)]))
+            idx = _thin(list(range(len(x))), 90)
+            out["x"] = [x[i] for i in idx]
+            out["series"] = [{"label": label, "y": [round(ys[i], 1) for i in idx]} for label, ys in cols]
+            return out
+
         series = []
         for name, label in pc["series"]:
             d = traces[name]
             pts = [(str(x)[:10], y) for x, y in zip(decode(d["x"]), decode(d["y"]))
                    if isinstance(y, (int, float)) and y == y]
-            step = max(1, -(-len(pts) // PREVIEW_POINTS))
-            keep = pts[::step] if pts[::step][-1] == pts[-1] else pts[::step] + [pts[-1]]
-            series.append({"label": label, "x": [p[0] for p in keep],
-                           "y": [round(p[1], 4) for p in keep]})
-        return {"caption": pc["caption"], "fmt": pc["fmt"], "tile": tile["name"], "series": series}
+            keep = _thin(pts)
+            series.append({"label": label, "x": [p[0] for p in keep], "y": [round(p[1], 4) for p in keep]})
+        out["series"] = series
+        return out
     except Exception as e:  # noqa: BLE001 — a missing preview should never fail the build
         log(f"  preview skipped for {cfg['slug']}: {e}")
         return None
