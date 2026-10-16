@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markets Research Terminal · Dylan Layden</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3.7.0/plotly.min.js" integrity="sha384-l4G4qURPwALv583BKlynU/4LiUx0rk9jcTX58Aq+Jc+jgWb52zeH2geZkSS3UPPs" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.js" integrity="sha384-2vpGtuKqJvFlwJqYnf/wUMuzUfhUnYBt9oay0e2yaFcq0Dh6/aEbQ8YAOeKGzlYo" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js" integrity="sha384-a7SzOxErzJ3ZpQz0zJ32d67dSitNzPcbfybc/ykU9KJhMgZkwqfSxlhhdJRS+XGL" crossorigin="anonymous" defer></script>
+  <script src="assets/asof.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <div class="top">
+    <a class="brand" href="./">Markets Research Terminal <span>· Dylan Layden</span></a>
+    <nav class="nav" id="nav"></nav>
+    <div class="stamp" id="stamp"></div>
+  </div>
+  <main>
+    <div class="apphead">
+      <div>
+        <h1 id="title">Loading…</h1>
+        <p id="blurb"></p>
+        <div class="asof" id="asof"></div>
+      </div>
+      <div class="controls" id="groups"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </main>
+  <footer>
+    <p id="sources"></p>
+    <p>Snapshot of a live analytics backend, refreshed daily. Data remains subject to each provider's terms. Shown for research and educational purposes only. Nothing here is investment advice.</p>
+  </footer>
+</body>
+</html>

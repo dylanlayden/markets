@@ -1,0 +1,6 @@
+# Generated output is published to the gh-pages branch by publish.sh, never committed to main.
+site/
+__pycache__/
+*.log
+.DS_Store
+.claude/
