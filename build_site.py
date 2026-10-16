@@ -51,32 +51,82 @@ SHOWCASE = [
         "slug": "macro",
         "blurb": "US rates, credit, inflation, growth, labor and global yields — 20 charts with recession shading.",
         "sources": "FRED (Federal Reserve Bank of St. Louis) via OpenBB Platform; NBER recession dates.",
+        "preview": {"tile": "macro_credit_spreads", "fmt": "pct",
+                    "series": [["US High Yield", "High yield"], ["US Investment Grade", "Investment grade"]],
+                    "caption": "US corporate option-adjusted spreads, %"},
     },
     {
         "name": "Housing & SF Real Estate",
         "slug": "housing",
         "blurb": "US housing macro down to San Francisco ZIP codes: prices, momentum, rents and gross yields.",
         "sources": "FRED (S&P CoreLogic Case-Shiller, Realtor.com, Freddie Mac, BLS); Zillow Research (ZHVI, ZORI); Redfin Data Center.",
+        "preview": {"tile": "re_sf_caseshiller", "fmt": "index",
+                    "series": [["Case-Shiller SF", "San Francisco"]],
+                    "caption": "S&P CoreLogic Case-Shiller San Francisco home price index (Jan 2000 = 100)"},
     },
     {
         "name": "Gold Market",
         "slug": "gold",
         "blurb": "Gold supply and demand, central-bank buying, ETF flows, futures positioning and producers.",
         "sources": "World Gold Council (Goldhub); LBMA; CFTC; Yahoo Finance.",
+        "preview": {"tile": "gd_aisc", "fmt": "usd",
+                    "series": [["Gold price (quarterly avg)", "Gold price"], ["All-in sustaining cost", "Miners' all-in cost"]],
+                    "caption": "Gold price vs producers' all-in sustaining cost, US$/oz, quarterly"},
     },
     {
         "name": "Gold Price Formation",
         "slug": "gold-price",
         "blurb": "Who sets the gold price: COT positioning, trader concentration, 13F holders and the COMEX–London basis.",
         "sources": "CFTC Commitments of Traders; SEC Form 13F data sets; LBMA; Yahoo Finance.",
+        "preview": {"tile": "gp_cot_percentile", "fmt": "pct",
+                    "series": [["Managed-money net long", "Managed money"]],
+                    "caption": "COMEX gold managed-money net long, % of open interest, weekly"},
     },
     {
         "name": "HYPE · Hyperliquid Cash Flow",
         "slug": "hype",
         "blurb": "Hyperliquid valued as a cash-flowing asset: fees, revenue, buybacks, multiples and market structure.",
         "sources": "DefiLlama; Hyperliquid public info API; CoinGecko; OKX; FRED.",
+        "preview": {"tile": "hy_fees_rev", "fmt": "usdm",
+                    "series": [["Fees 30d avg", "Fees"], ["Revenue 30d avg", "Revenue"]],
+                    "caption": "Hyperliquid daily fees and protocol revenue, 30-day average, US$"},
     },
 ]
+
+
+PREVIEW_POINTS = 180   # homepage mini charts are downsampled to about this many points
+
+
+def decode(v):
+    """Plotly 6 ships arrays as {"dtype", "bdata"} (base64); expand to a plain list."""
+    if isinstance(v, dict) and "bdata" in v:
+        import base64, numpy as np
+        return np.frombuffer(base64.b64decode(v["bdata"]), dtype=np.dtype(v["dtype"])).tolist()
+    return v
+
+
+def build_preview(cfg: dict, tiles: list[dict], outdir: Path) -> dict | None:
+    """Small line series for the homepage card, taken from one of the app's own charts."""
+    pc = cfg.get("preview")
+    if not pc:
+        return None
+    try:
+        tile = next(t for t in tiles if t["id"] == pc["tile"])
+        fig = json.loads((outdir / tile["variants"][tile["default"]]).read_text())
+        traces = {d.get("name"): d for d in fig["data"]}
+        series = []
+        for name, label in pc["series"]:
+            d = traces[name]
+            pts = [(str(x)[:10], y) for x, y in zip(decode(d["x"]), decode(d["y"]))
+                   if isinstance(y, (int, float)) and y == y]
+            step = max(1, -(-len(pts) // PREVIEW_POINTS))
+            keep = pts[::step] if pts[::step][-1] == pts[-1] else pts[::step] + [pts[-1]]
+            series.append({"label": label, "x": [p[0] for p in keep],
+                           "y": [round(p[1], 4) for p in keep]})
+        return {"caption": pc["caption"], "fmt": pc["fmt"], "tile": tile["name"], "series": series}
+    except Exception as e:  # noqa: BLE001 — a missing preview should never fail the build
+        log(f"  preview skipped for {cfg['slug']}: {e}")
+        return None
 
 
 def log(*a):
@@ -218,8 +268,9 @@ def build_app(cfg: dict, widgets: dict, apps: dict, ex: cf.Executor) -> dict:
     }
     (outdir / "manifest.json").write_text(json.dumps(manifest, indent=1))
     log(f"{cfg['name']}: {len(tiles)} tiles, {ok} payloads ok, {stale} stale, {failed} failed")
-    return {"slug": cfg["slug"], "name": cfg["name"], "blurb": cfg["blurb"], "tiles": len(tiles),
-            "charts": sum(t["type"] == "chart" for t in tiles), "ok": ok, "stale": stale, "failed": failed}
+    return {"slug": cfg["slug"], "name": cfg["name"], "blurb": cfg["blurb"], "sources": cfg["sources"],
+            "tiles": len(tiles), "charts": sum(t["type"] == "chart" for t in tiles),
+            "preview": build_preview(cfg, tiles, outdir), "ok": ok, "stale": stale, "failed": failed}
 
 
 SECRET_PATTERNS = [

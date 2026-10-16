@@ -7,38 +7,47 @@
   <meta name="description" content="Research dashboards on rates, credit, housing and gold, built from raw public data with a Python/FastAPI analytics backend and published as a daily-refreshed static site.">
   <meta property="og:title" content="Markets Research Terminal · Dylan Layden">
   <meta property="og:description" content="Research dashboards on rates, credit, housing and gold, refreshed daily from public data.">
-  <link rel="stylesheet" href="assets/style.css">
+  <meta name="color-scheme" content="light dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+  <link rel="stylesheet" href="assets/home.css">
 </head>
 <body>
-  <div class="top">
-    <a class="brand" href="./">Markets Research Terminal <span>· Dylan Layden</span></a>
-    <nav class="nav" id="nav"></nav>
-    <div class="stamp" id="stamp"></div>
-  </div>
-  <main>
+  <header class="mast">
+    <div class="wrap mast-row">
+      <a class="mast-name" href="./">Markets Research Terminal</a>
+      <nav class="mast-nav">
+        <a href="#dashboards">Dashboards</a>
+        <a href="#about">About</a>
+        <a href="https://github.com/dylanlayden/markets">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
     <section class="hero">
-      <h1>Research dashboards I designed and built, from raw public data to finished charts.</h1>
-      <p>A Python/FastAPI analytics backend pulls from FRED, the CFTC, the SEC, Zillow, Redfin, the World Gold Council, DefiLlama and on-chain APIs, computes the analysis, and serves it as interactive Plotly charts, tables and auto-generated written reads.</p>
-      <p>These pages are a read-only snapshot of that backend, refreshed daily.</p>
-      <div class="asof" id="asof"></div>
-      <div class="stats" id="stats"></div>
+      <p class="eyebrow">Research dashboards · Public data · Rebuilt daily</p>
+      <h1>Markets Research Terminal</h1>
+      <p class="deck">Five research dashboards on rates and credit, real estate, gold, and one crypto exchange's cash flows. Each one is built from raw public data by a Python analytics backend I wrote, then published here as a read-only snapshot.</p>
+      <div class="byline">
+        <span>By <b>Dylan Layden</b></span>
+        <span id="asof" class="asof"></span>
+        <span id="counts"></span>
+      </div>
     </section>
-    <section class="cards" id="cards"></section>
-    <section class="about" id="about">
-      <h2>About this project</h2>
+
+    <section id="dashboards" class="section">
+      <h2 class="section-label">Dashboards</h2>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <section id="about" class="section about">
+      <h2 class="section-label">About this project</h2>
       <div class="about-grid">
         <div>
           <h3>Why I built it</h3>
           <p>I wanted one place to read the conditions that drive credit and real-estate risk: where rates and spreads are, how the economy and labor market are trending, and what property values, rents and yields are doing down to the San Francisco ZIP-code level. The gold and crypto dashboards apply the same approach to markets I follow: supply and demand, who holds the asset, and what it earns.</p>
-        </div>
-        <div>
-          <h3>What's on it</h3>
-          <ul>
-            <li><b>Macro Factors</b>: Treasury curve, credit spreads, inflation, growth and labor, with recession shading.</li>
-            <li><b>Housing &amp; SF Real Estate</b>: national housing data plus SF ZIP-level prices, rents, momentum and gross yields.</li>
-            <li><b>Gold Market</b> and <b>Gold Price Formation</b>: supply and demand, central banks, ETF flows, futures positioning and 13F holders.</li>
-            <li><b>Hyperliquid Cash Flow</b>: a crypto exchange analyzed like a business, with fees, revenue, buybacks and multiples.</li>
-          </ul>
         </div>
         <div>
           <h3>How it's built</h3>
@@ -51,28 +60,15 @@
       </div>
     </section>
   </main>
-  <footer>
-    <p>Data comes from the public sources credited on each dashboard and remains subject to those providers' terms. Shown for research and educational purposes only. Nothing here is investment advice.</p>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p>Data comes from the public sources credited on each dashboard and remains subject to those providers' terms. Shown for research and educational purposes only. Nothing here is investment advice.</p>
+    </div>
   </footer>
+
+  <div class="tip" id="tip" role="tooltip" hidden></div>
   <script src="assets/asof.js"></script>
-  <script>
-    fetch("data/index.json").then(r => r.json()).then(idx => {
-      const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-      document.getElementById("stamp").textContent = asOf(idx.generated_at).short;
-      const a = asOf(idx.generated_at), box = document.getElementById("asof");
-      box.className = "asof" + (a.old ? " old" : "");
-      box.textContent = a.long;
-      document.getElementById("nav").innerHTML = idx.apps.map(a => `<a href="app.html?app=${a.slug}">${esc(a.name)}</a>`).join("");
-      const tiles = idx.apps.reduce((n, a) => n + a.tiles, 0), charts = idx.apps.reduce((n, a) => n + a.charts, 0);
-      document.getElementById("stats").innerHTML =
-        `<div><b>${idx.apps.length}</b>dashboards</div><div><b>${tiles}</b>tiles</div><div><b>${charts}</b>charts</div><div><b>daily</b>refresh</div>`;
-      document.getElementById("cards").innerHTML = idx.apps.map(a => `
-        <a class="card" href="app.html?app=${a.slug}">
-          <h2>${esc(a.name)}</h2>
-          <p>${esc(a.blurb)}</p>
-          <div class="meta">${a.tiles} tiles · ${a.charts} charts</div>
-        </a>`).join("");
-    });
-  </script>
+  <script src="assets/home.js"></script>
 </body>
 </html>
