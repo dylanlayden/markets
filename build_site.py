@@ -256,14 +256,30 @@ def build_app(cfg: dict, widgets: dict, apps: dict, ex: cf.Executor) -> dict:
             }
             tiles.append(tile)
             for v in vs:
-                q = dict(v)
-                if wtype == "chart":
-                    q["theme"] = "dark"
-                jobs.append((tile, v, ex.submit(get_json, w["endpoint"], q)))
+                # charts are fetched in both themes; the page picks one from the visitor's
+                # light/dark setting. Dark is the canonical file, light sits beside it.
+                for theme in (("dark", "light") if wtype == "chart" else (None,)):
+                    q = dict(v, theme=theme) if theme else dict(v)
+                    jobs.append((tile, v, theme, ex.submit(get_json, w["endpoint"], q)))
 
     ok = stale = failed = 0
-    for tile, v, fut in jobs:
+    for tile in tiles:
+        if tile["type"] == "chart":
+            tile["light"] = True  # cleared below if any light variant is missing
+    for tile, v, theme, fut in jobs:
         fname = vfile(tile["id"], v)
+        if theme == "light":
+            path = outdir / fname.replace(".json", ".light.json")
+            try:
+                payload = fut.result()
+                if not shape_ok("chart", payload) or degraded(payload):
+                    raise RuntimeError("bad light payload")
+                path.write_text(json.dumps(payload, separators=(",", ":")))
+            except Exception as e:  # noqa: BLE001 — the page falls back to the dark chart
+                if not path.exists():
+                    tile["light"] = False
+                    log(f"  LIGHT {cfg['slug']}/{tile['id']} {vkey(v)}: {e}")
+            continue
         path = outdir / fname
         try:
             payload = fut.result()
@@ -303,6 +319,91 @@ def build_app(cfg: dict, widgets: dict, apps: dict, ex: cf.Executor) -> dict:
     return {"slug": cfg["slug"], "name": cfg["name"], "blurb": cfg["blurb"], "sources": cfg["sources"],
             "tiles": len(tiles), "charts": sum(t["type"] == "chart" for t in tiles),
             "preview": build_preview(cfg, tiles, outdir), "ok": ok, "stale": stale, "failed": failed}
+
+
+SITE_URL = "https://dylanlayden.github.io/markets/"
+
+
+def build_og(summary: list[dict]) -> None:
+    """1200x630 link-preview image (LinkedIn, Slack, iMessage) drawn from today's previews."""
+    try:
+        import math
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        from matplotlib.font_manager import FontProperties
+    except Exception as e:  # noqa: BLE001
+        log(f"  og image skipped: {e}")
+        return
+    sup = "/System/Library/Fonts/Supplemental/"
+    serif = FontProperties(fname=sup + "Georgia Bold.ttf")
+    sans = FontProperties(fname="/System/Library/Fonts/Helvetica.ttc")
+    BG, INK, INK2, MUTED, RULE, GRID = "#f8f7f3", "#16191d", "#4a505a", "#6b7280", "#d9d5ca", "#ece9e1"
+    S1, S2 = "#2b5c9e", "#c0702a"
+
+    fig = plt.figure(figsize=(12, 6.3), dpi=100, facecolor=BG)
+    fig.text(0.05, 0.875, "SELECTED RESEARCH DASHBOARDS", fontproperties=sans, fontsize=13, color=MUTED)
+    fig.text(0.05, 0.75, "Markets Research Terminal", fontproperties=serif, fontsize=46, color=INK)
+    names = " · ".join(a["name"].split(" · ")[0] for a in summary)
+    fig.text(0.05, 0.665, f"Dylan Layden  —  {names}", fontproperties=sans, fontsize=15, color=INK2)
+    fig.add_artist(plt.Line2D([0.05, 0.95], [0.615, 0.615], color=RULE, lw=1.2))
+
+    apps = [a for a in summary if a.get("preview")][:4]
+    w, gap, x0 = 0.2, 0.0333, 0.05
+    for i, a in enumerate(apps):
+        pv = a["preview"]
+        left = x0 + i * (w + gap)
+        title = {"Housing & SF Real Estate": "Housing"}.get(a["name"], a["name"].split(" · ")[0])
+        fig.text(left, 0.555, title, fontproperties=serif, fontsize=16, color=INK)
+        fig.text(left, 0.515, pv["caption"].replace(", trailing four quarters", " (trailing 4Q)"),
+                 fontproperties=sans, fontsize=10.5, color=MUTED)
+        ax = fig.add_axes([left + 0.034, 0.1, w - 0.044, 0.34], facecolor=BG)
+        for side in ("top", "right", "left"):
+            ax.spines[side].set_visible(False)
+        ax.spines["bottom"].set_color(RULE)
+        ax.tick_params(colors=MUTED, labelsize=9, length=0)
+        ax.grid(axis="y", color=GRID, lw=1)
+        ax.set_axisbelow(True)
+        if pv["kind"] == "flow":
+            ax.set_position([left, 0.1, w, 0.34])
+            tot = sum(d["value"] for d in pv["demand"])
+            rows = sorted(pv["demand"], key=lambda d: d["value"])
+            shares = [d["value"] / tot * 100 for d in rows]
+            ax.barh(range(len(rows)), shares, color=S1, height=0.5)
+            for j, (d, v) in enumerate(zip(rows, shares)):
+                ax.text(v + 1.2, j, f"{d['label'].replace(' & unreported', ' & other')}  {v:.0f}%",
+                        va="center", fontproperties=sans, fontsize=10, color=INK2)
+            ax.set_xlim(0, 75)
+            ax.set_yticks([])
+            ax.set_xticks([])
+            ax.grid(False)
+            continue
+        for k, ser in enumerate(pv["series"][:2]):
+            if pv["kind"] == "curve":
+                xs = [math.log(v) for v in ser["x"]]
+            else:
+                xs = [dt.date.fromisoformat(d).toordinal() for d in ser["x"]]
+            ax.plot(xs, ser["y"], color=(S1, S2)[k], lw=2.4 if k == 0 else 2, label=ser["label"])
+        if len(pv["series"]) > 1:
+            leg = ax.legend(loc="lower left", bbox_to_anchor=(-0.17, 1.02), frameon=False, prop=sans,
+                            labelcolor=INK2, handlelength=1.4, ncols=2, borderaxespad=0, columnspacing=1.2)
+            for t in leg.get_texts():
+                t.set_fontsize(10)
+        if pv["kind"] == "curve":
+            tv, tt = pv["ticks"]["vals"], pv["ticks"]["text"]
+            keep = [j for j, t in enumerate(tt) if t in ("3M", "2Y", "10Y", "30Y")]
+            ax.set_xticks([math.log(tv[j]) for j in keep], [tt[j] for j in keep])
+        else:
+            xs0 = [dt.date.fromisoformat(d) for d in pv["series"][0]["x"]]
+            ax.set_xticks([xs0[0].toordinal(), xs0[-1].toordinal()], [str(xs0[0].year), str(xs0[-1].year)])
+        if pv["fmt"] == "pct":
+            ax.yaxis.set_major_formatter(lambda v, _: f"{v:g}%")
+        ax.locator_params(axis="y", nbins=4)
+    asof = dt.datetime.fromisoformat(NOW).astimezone().strftime("%b %-d, %Y")
+    fig.text(0.95, 0.03, f"Data as of {asof} · public sources · refreshed daily", fontproperties=sans,
+             fontsize=10, color=MUTED, ha="right")
+    fig.savefig(SITE / "og.png", facecolor=BG)
+    plt.close(fig)
 
 
 SECRET_PATTERNS = [
@@ -361,6 +462,7 @@ def main() -> int:
         summary = [build_app(c, widgets, apps, ex) for c in SHOWCASE]
 
     (DATA / "index.json").write_text(json.dumps({"generated_at": NOW, "apps": summary}, indent=1))
+    build_og(summary)
 
     bad = secret_scan()
     if bad:

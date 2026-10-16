@@ -14,9 +14,17 @@
     return cache.get(url);
   };
 
+  // Charts come in a light and a dark version; follow the visitor's device setting.
+  const dark = window.matchMedia("(prefers-color-scheme: dark)");
+  const tiles = [];
+  dark.addEventListener("change", () => tiles.filter(t => t.type === "chart" && t._rendered).forEach(t => render(t, true)));
+
   fetch("data/index.json").then(r => r.json()).then(idx => {
     document.getElementById("nav").innerHTML = idx.apps.map(a =>
       `<a href="app.html?app=${a.slug}" class="${a.slug === slug ? "on" : ""}">${esc(a.name)}</a>`).join("");
+    const i = idx.apps.findIndex(a => a.slug === slug);
+    if (i >= 0) document.getElementById("eyebrow").textContent =
+      `Dashboard ${String(i + 1).padStart(2, "0")} of ${String(idx.apps.length).padStart(2, "0")}`;
   });
 
   if (!slug) { location.replace("./"); return; }
@@ -27,7 +35,6 @@
     document.getElementById("blurb").textContent = m.blurb;
     document.getElementById("sources").textContent = "Sources: " + m.sources;
     const a = asOf(m.generated_at), box = document.getElementById("asof");
-    document.getElementById("stamp").textContent = a.short;
     box.className = "asof" + (a.old ? " old" : "");
     box.textContent = a.long;
 
@@ -50,6 +57,7 @@
     }, {rootMargin: "800px 0px"});
 
     for (const t of m.tiles) {
+      tiles.push(t);
       tileValues.set(t.id, parseKey(t.default));
       const isHdr = t.type === "markdown" && (t.h <= 3 || /hdr/.test(t.id));
       const el = document.createElement("section");
@@ -84,7 +92,8 @@
     t._rendered = true;
     const vals = {...tileValues.get(t.id)};
     if (t.group && groupValues[t.group] !== undefined) vals[t.group] = groupValues[t.group];
-    const file = t.variants[makeKey(vals)];
+    let file = t.variants[makeKey(vals)];
+    if (file && t.type === "chart" && t.light && !dark.matches) file = file.replace(/\.json$/, ".light.json");
     const body = t._el.querySelector(".body");
     if (!file) { body.innerHTML = '<div class="msg">Not available in this snapshot.</div>'; return; }
     getJSON(`data/${slug}/${file}`).then(payload => {
