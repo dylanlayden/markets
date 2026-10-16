@@ -5,7 +5,17 @@
 .hero h1 { margin: 0 0 14px; font: 600 clamp(34px, 4.4vw, 50px)/1.06 var(--serif); letter-spacing: -0.015em; }
 .deck { margin: 0; max-width: 900px; font: 400 clamp(17px, 1.7vw, 19.5px)/1.5 var(--serif); color: var(--ink-2); }
 .byline { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 20px; font-size: 13.5px; color: var(--muted); }
+.byline { align-items: center; }
 .byline b { color: var(--ink); font-weight: 600; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+.stat {
+  display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px 5px 10px;
+  border: 1px solid var(--rule-strong); border-radius: 999px; background: var(--card);
+  color: var(--ink-2); font-size: 13px; line-height: 1;
+}
+a.stat:hover { border-color: var(--link); color: var(--ink); text-decoration: none; }
+.stat svg { width: 14px; height: 14px; fill: none; stroke: var(--link); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.stat b { display: inline-block; text-align: right; font: 600 13.5px var(--sans); color: var(--ink); font-variant-numeric: tabular-nums; }
 
 /* ---------- sections ---------- */
 .section { padding: 22px 0 8px; }

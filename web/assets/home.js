@@ -38,6 +38,32 @@
       + ` (${fmtDate(last(p.series[0].x))})`;
   }
 
+  // Counter pills under the intro (after Our World in Data's homepage counts).
+  const svg = d => `<svg viewBox="0 0 16 16" aria-hidden="true">${d}</svg>`;
+  const ICON = {
+    grid: svg('<rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/>'),
+    chart: svg('<path d="M2 13.5h12"/><path d="M3 11l3.2-3.6 2.6 2.2L13 4.5"/>'),
+    tiles: svg('<rect x="2" y="2.5" width="12" height="11" rx="1.5"/><path d="M2 6.5h12M7 6.5v7"/>'),
+    db: svg('<ellipse cx="8" cy="3.8" rx="5.5" ry="1.8"/><path d="M2.5 3.8v8.4c0 1 2.5 1.8 5.5 1.8s5.5-.8 5.5-1.8V3.8"/><path d="M2.5 8c0 1 2.5 1.8 5.5 1.8s5.5-.8 5.5-1.8"/>'),
+  };
+  function renderStats(items) {
+    const box = document.getElementById("stats");
+    box.innerHTML = items.map(s => {
+      const tag = s.href ? "a" : "span";
+      return `<${tag} class="stat"${s.href ? ` href="${s.href}"` : ""}${s.title ? ` title="${esc(s.title)}"` : ""}>
+        ${s.icon}<b data-n="${s.n}">${s.n}</b> ${esc(s.label)}</${tag}>`;
+    }).join("");
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const nums = [...box.querySelectorAll("b[data-n]")], t0 = performance.now(), dur = 900;
+    nums.forEach(b => { b.style.minWidth = `${b.offsetWidth}px`; b.textContent = "0"; });
+    const tick = now => {
+      const k = Math.min(1, (now - t0) / dur), e = 1 - (1 - k) ** 3;
+      nums.forEach(b => { b.textContent = Math.round(+b.dataset.n * e).toLocaleString(); });
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
   function legend(p) {
     const items = p.kind === "flow" ? p.supply.map(s => short(s.label))
       : p.series.length > 1 ? p.series.map(s => s.label) : [];
@@ -50,7 +76,13 @@
     box.textContent = a.long.split(" · ")[0];
     if (a.old) box.classList.add("old");
     const tiles = idx.apps.reduce((n, x) => n + x.tiles, 0), charts = idx.apps.reduce((n, x) => n + x.charts, 0);
-    document.getElementById("counts").textContent = `${idx.apps.length} dashboards · ${tiles} tiles · ${charts} charts`;
+    renderStats([
+      {n: idx.apps.length, label: "dashboards", href: "#dashboards", icon: ICON.grid},
+      {n: charts, label: "charts", icon: ICON.chart},
+      {n: tiles, label: "tiles", icon: ICON.tiles},
+      {n: (idx.sources || []).length, label: "data sources", href: "#about", icon: ICON.db,
+       title: (idx.sources || []).join(", ")},
+    ].filter(s => s.n));
 
     const cards = document.getElementById("cards");
     idx.apps.forEach((app, i) => {

@@ -324,6 +324,17 @@ def build_app(cfg: dict, widgets: dict, apps: dict, ex: cf.Executor) -> dict:
 SITE_URL = "https://dylanlayden.github.io/markets/"
 
 
+def source_names(apps: list[dict]) -> list[str]:
+    """Distinct data providers across the showcase, for the homepage counter."""
+    seen = {}
+    for a in apps:
+        for part in a["sources"].rstrip(".").split(";"):
+            name = re.split(r"\s*\(|\s+via\s", part.strip())[0].strip()
+            if name:
+                seen.setdefault(name.lower(), name)
+    return sorted(seen.values(), key=str.lower)
+
+
 def build_og(summary: list[dict]) -> None:
     """1200x630 link-preview image (LinkedIn, Slack, iMessage) drawn from today's previews."""
     try:
@@ -461,7 +472,8 @@ def main() -> int:
     with cf.ThreadPoolExecutor(WORKERS) as ex:
         summary = [build_app(c, widgets, apps, ex) for c in SHOWCASE]
 
-    (DATA / "index.json").write_text(json.dumps({"generated_at": NOW, "apps": summary}, indent=1))
+    (DATA / "index.json").write_text(json.dumps({"generated_at": NOW, "apps": summary,
+                                                 "sources": source_names(SHOWCASE)}, indent=1))
     build_og(summary)
 
     bad = secret_scan()
