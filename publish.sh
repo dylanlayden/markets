@@ -17,6 +17,8 @@ git config credential.helper "!gh auth git-credential"
 # ~11 MB push: git's 1 MB default buffer switches to chunked encoding, which GitHub
 # can reject with HTTP 400. Send it in one request instead.
 git config http.postBuffer 157286400
+# Large pushes over HTTP/2 also hit the same 400 from GitHub; HTTP/1.1 avoids it.
+git config http.version HTTP/1.1
 git add -A
 git commit -q -m "Snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
 git push -q --force "$REMOTE" gh-pages
