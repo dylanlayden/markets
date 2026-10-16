@@ -451,6 +451,20 @@ def secret_scan() -> list[str]:
 NOW = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
 
 
+def fingerprint_assets() -> None:
+    """Add ?v=<content hash> to every local asset link in the HTML pages.
+
+    GitHub Pages lets browsers cache files for 10 minutes under the same name, so without
+    this a returning visitor can run a new page against an old script (or the reverse).
+    """
+    def stamp(m: re.Match) -> str:
+        f = SITE / m.group(1)
+        return m.group(0) if not f.exists() else f'{m.group(1)}?v={hashlib.sha1(f.read_bytes()).hexdigest()[:10]}"'
+    for page in SITE.glob("*.html"):
+        html = page.read_text()
+        page.write_text(re.sub(r'(assets/[\w.-]+\.(?:css|js))"', stamp, html))
+
+
 def main() -> int:
     t0 = time.time()
     widgets = get_json("/widgets.json")
@@ -471,6 +485,7 @@ def main() -> int:
         else:
             shutil.copy2(item, dest)
     (SITE / ".nojekyll").write_text("")
+    fingerprint_assets()
 
     with cf.ThreadPoolExecutor(WORKERS) as ex:
         summary = [build_app(c, widgets, apps, ex) for c in SHOWCASE]
