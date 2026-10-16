@@ -42,9 +42,9 @@ WORKERS = 4            # the backend handles 30 concurrent; stay polite to upstr
 RETRIES = 3
 TIMEOUT = 240
 
-# Showcase apps, in display order: the rates/credit and real-estate views lead, crypto
-# comes last. Silver Market is held back: its core tiles are derived from the World
-# Silver Survey (licensed publication).
+# Showcase apps, in display order. Gold Price Formation is off the homepage for now
+# (kept on the backend). Silver Market is held back: its core tiles are derived from
+# the World Silver Survey (licensed publication).
 SHOWCASE = [
     {
         "name": "Macro Factors",
@@ -71,17 +71,6 @@ SHOWCASE = [
         "sources": "World Gold Council (Goldhub); LBMA; CFTC; Yahoo Finance.",
         "preview": {"tile": "gd_sankey", "kind": "flow", "fmt": "tonnes",
                     "caption": "Gold supply to demand, trailing four quarters"},
-    },
-    {
-        "name": "Gold Price Formation",
-        "slug": "gold-price",
-        "blurb": "Who sets the gold price: COT positioning, trader concentration, 13F holders and the COMEX–London basis.",
-        "sources": "CFTC Commitments of Traders; SEC Form 13F data sets; LBMA; Yahoo Finance.",
-        "preview": {"tile": "gp_cot_stack", "kind": "bars", "fmt": "tonnes",
-                    "series": [["Producer / merchant", "Producers"], ["Swap dealers", "Swap dealers"],
-                               ["Managed money", "Managed money"],
-                               [["Other reportables", "Non-reportable (small)"], "Other"]],
-                    "caption": "COMEX gold net position by trader category"},
     },
     {
         "name": "HYPE · Hyperliquid Cash Flow",

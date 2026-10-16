@@ -85,8 +85,8 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font: 500 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
 }
 
-/* ---------- dashboard cards: one row of five ---------- */
-.cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+/* ---------- dashboard cards: one row ---------- */
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 .card {
   display: flex; flex-direction: column; min-width: 0; background: var(--card);
   border: 1px solid var(--rule); border-radius: 4px; padding: 14px 14px 10px;
@@ -127,7 +127,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .card-foot a { margin-left: auto; font: 500 13px var(--sans); }
 
 /* narrower screens: the row scrolls sideways instead of wrapping */
-@media (max-width: 1100px) {
+@media (max-width: 960px) {
   .cards {
     display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px;
     margin: 0 -24px; padding: 0 24px 10px; scroll-padding: 0 24px;
@@ -148,7 +148,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* ---------- about ---------- */
 .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px 40px; }
 .about h3 { margin: 0 0 8px; font: 600 18px var(--serif); }
-.about p { margin: 0; color: var(--ink-2); font-size: 14.5px; }
+.about p { margin: 0; color: var(--ink-2); font: 400 16.5px/1.55 var(--serif); }  /* matches the intro deck */
 .stale-tag { color: var(--warn); font: 12px var(--mono); }
 
 .foot { margin-top: 56px; padding: 26px 0 44px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 12.5px; }
