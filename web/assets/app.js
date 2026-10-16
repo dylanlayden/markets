@@ -71,7 +71,7 @@
           ${t.stale ? '<span class="stale" title="Latest refresh failed; showing the previous snapshot">stale</span>' : ""}
           ${own.map(p => `<select data-p="${esc(p.name)}" aria-label="${esc(p.label)}">${p.options.map(o =>
             `<option value="${esc(o.value)}"${o.value === tileValues.get(t.id)[p.name] ? " selected" : ""}>${esc(o.label)}</option>`).join("")}</select>`).join("")}
-          ${t.description ? `<span class="i" title="${esc(t.description)}">ⓘ</span>` : ""}
+          ${t.explain || t.description ? `<button type="button" class="info" aria-label="What is this metric?" data-tip="${esc(t.explain || t.description)}">i</button>` : ""}
         </header>
         <div class="body${t.type === "chart" ? "" : t.type === "table" ? " table" : " scroll"}"></div>`;
       el.querySelectorAll("select[data-p]").forEach(s => s.addEventListener("change", () => {
@@ -86,6 +86,47 @@
   }).catch(() => {
     document.getElementById("title").textContent = "Dashboard not found";
   });
+
+  // ⓘ popover: hover or focus on desktop, tap on touch screens; Escape or a tap elsewhere closes it.
+  const pop = document.createElement("div");
+  pop.className = "info-pop";
+  pop.setAttribute("role", "tooltip");
+  pop.id = "info-pop";
+  pop.hidden = true;
+  document.body.appendChild(pop);
+  let pinned = null, current = null;
+  const showPop = btn => {
+    current = btn;
+    pop.textContent = btn.dataset.tip;
+    pop.hidden = false;
+    btn.setAttribute("aria-describedby", "info-pop");
+    const r = btn.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
+    const left = Math.max(8, Math.min(window.innerWidth - w - 8, r.right - w));
+    const below = r.bottom + 8 + h <= window.innerHeight;
+    pop.style.left = `${left}px`;
+    pop.style.top = `${below ? r.bottom + 8 : r.top - h - 8}px`;
+  };
+  const hidePop = () => {
+    current = null;
+    pop.hidden = true;
+    document.querySelectorAll(".info[aria-describedby]").forEach(b => b.removeAttribute("aria-describedby"));
+  };
+  grid.addEventListener("mouseover", e => { const b = e.target.closest(".info"); if (b && !pinned) showPop(b); });
+  grid.addEventListener("mouseout", e => { if (e.target.closest(".info") && !pinned) hidePop(); });
+  grid.addEventListener("focusin", e => { const b = e.target.closest(".info"); if (b) showPop(b); });
+  grid.addEventListener("focusout", e => { if (e.target.closest(".info") && !pinned) hidePop(); });
+  document.addEventListener("click", e => {
+    const b = e.target.closest(".info");
+    if (b && pinned !== b) { pinned = b; showPop(b); return; }
+    pinned = null; hidePop();
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") { pinned = null; hidePop(); } });
+  // keep the popover attached to its button while the page scrolls; drop it once the button leaves the screen
+  window.addEventListener("scroll", () => {
+    if (!current) return;
+    const r = current.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > window.innerHeight) { pinned = null; hidePop(); } else showPop(current);
+  }, {passive: true});
 
   function render(t, force) {
     if (t._rendered && !force) return;

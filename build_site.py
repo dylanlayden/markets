@@ -31,6 +31,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from metric_notes import NOTES  # ⓘ tooltip text per tile
+
 BACKEND = os.environ.get("BACKEND_URL", "http://127.0.0.1:6901")
 ROOT = Path(__file__).resolve().parent
 WEB = ROOT / "web"
@@ -244,6 +246,7 @@ def build_app(cfg: dict, widgets: dict, apps: dict, ex: cf.Executor) -> dict:
                 "id": t["i"], "x": t["x"], "y": t["y"], "w": t["w"], "h": t["h"],
                 "type": wtype, "name": w.get("name", t["i"]),
                 "description": w.get("description", ""),
+                "explain": NOTES.get(t["i"], ""),
                 "params": [
                     {"name": p["paramName"], "label": p.get("label", p["paramName"]),
                      "options": [{"label": o.get("label", o["value"]), "value": str(o["value"])}
