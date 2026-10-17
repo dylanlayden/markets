@@ -1,0 +1,619 @@
+{
+ "slug": "hype",
+ "name": "HYPE \u00b7 Hyperliquid Cash Flow",
+ "blurb": "Hyperliquid valued as a cash-flowing asset: fees, revenue, buybacks, multiples and market structure.",
+ "sources": "DefiLlama; Hyperliquid public info API; CoinGecko; OKX; FRED.",
+ "description": "Treat HYPE like a cash-flowing asset. Live cash-flow read; daily fees vs revenue and cumulative buildup; buyback yield and P/S\u2013P/E multiples over time; live perp volume, open interest, take rate and a per-market table (incl. RWA/TradFi perps); HYPE-vs-BTC rebased performance, rolling correlation and beta (crypto-beta vs hedge); and supply/unlock/dilution vs the buyback burn. Keyless data: DefiLlama (fees/revenue), Hyperliquid API (markets, candles), CoinGecko (mcap), OKX (BTC). Buyback = DefiLlama-revenue proxy; not investment advice.",
+ "generated_at": "2026-10-17T17:00:32+00:00",
+ "groups": [],
+ "tiles": [
+  {
+   "id": "hy_hdr_read",
+   "x": 0,
+   "y": 0,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Cash-Flow Read",
+   "description": "Cash-Flow Read section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_read.json"
+   }
+  },
+  {
+   "id": "hy_cashflow_read",
+   "x": 0,
+   "y": 2,
+   "w": 40,
+   "h": 13,
+   "type": "markdown",
+   "name": "Cash-Flow Read",
+   "description": "Auto-generated cash-flow summary \u2014 fees, revenue, buyback yield, multiples, dilution. Recomputed live.",
+   "explain": "A written summary generated from the latest Hyperliquid data: fees, revenue, buyback yield, valuation multiples and token dilution.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_cashflow_read.json"
+   }
+  },
+  {
+   "id": "hy_hdr_val",
+   "x": 0,
+   "y": 15,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Valuation & Cash Return",
+   "description": "Valuation & Cash Return section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_val.json"
+   }
+  },
+  {
+   "id": "hy_kpis",
+   "x": 0,
+   "y": 17,
+   "w": 16,
+   "h": 22,
+   "type": "markdown",
+   "name": "HYPE Cash-Flow KPIs",
+   "description": "Key valuation & cash-flow metrics at a glance.",
+   "explain": "Headline cash-flow and valuation figures for Hyperliquid and its HYPE token.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_kpis.json"
+   }
+  },
+  {
+   "id": "hy_fees_rev",
+   "x": 16,
+   "y": 17,
+   "w": 24,
+   "h": 22,
+   "type": "chart",
+   "name": "Daily Fees vs Revenue",
+   "description": "Daily protocol fees vs revenue (30d averages bold) \u2014 the raw cash flow. DefiLlama.",
+   "explain": "Fees are everything traders pay to use the exchange each day. Revenue is the portion kept by the protocol, which is used to buy back HYPE tokens, rather than paid to liquidity providers. Shown daily and as 30-day averages.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_fees_rev.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_cumulative",
+   "x": 0,
+   "y": 39,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Cumulative Fees & Revenue",
+   "description": "All-time cumulative fees and revenue (\u2248 cumulative buyback funded).",
+   "explain": "Total fees and total protocol revenue since launch. Cumulative revenue approximates the total spent on buying back HYPE.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_cumulative.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_buyback_yield",
+   "x": 20,
+   "y": 39,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Buyback Yield",
+   "description": "30d-annualised revenue \u00f7 market cap \u2014 HYPE's 'dividend-like' buyback yield over time.",
+   "explain": "The last 30 days of protocol revenue, annualized, divided by HYPE's market value. Because revenue funds token buybacks, it's comparable to a dividend or buyback yield on a stock.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_buyback_yield.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_multiples",
+   "x": 0,
+   "y": 52,
+   "w": 40,
+   "h": 13,
+   "type": "chart",
+   "name": "Valuation Multiples",
+   "description": "P/S and P/E over the past year (market cap \u00f7 annualised fees / revenue).",
+   "explain": "Price-to-sales (market cap divided by annualized fees) and price-to-earnings (market cap divided by annualized protocol revenue), the same valuation ratios used for listed companies.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_multiples.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_hdr_usage",
+   "x": 0,
+   "y": 65,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Volume & Usage (live)",
+   "description": "Volume & Usage (live) section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_usage.json"
+   }
+  },
+  {
+   "id": "hy_usage_kpis",
+   "x": 0,
+   "y": 67,
+   "w": 16,
+   "h": 22,
+   "type": "markdown",
+   "name": "Live Usage",
+   "description": "Live perp volume, open interest, market count, take rate (Hyperliquid API).",
+   "explain": "Live activity on Hyperliquid: 24-hour trading volume in perpetual futures, open interest (the value of positions still open), the number of listed markets, and the take rate (fees as a share of volume).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_usage_kpis.json"
+   }
+  },
+  {
+   "id": "hy_markets_table",
+   "x": 16,
+   "y": 67,
+   "w": 24,
+   "h": 22,
+   "type": "table",
+   "name": "Live Markets \u2014 Volume, OI, Funding",
+   "description": "Top Hyperliquid markets by 24h volume, incl. RWA/TradFi perps. Live from the HL info API.",
+   "explain": "Hyperliquid's most-traded markets over the last 24 hours, with volume, open interest and funding rate (the periodic payment between long and short traders that keeps a perpetual's price near the underlying).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_markets_table.json"
+   }
+  },
+  {
+   "id": "hy_top_markets_bar",
+   "x": 0,
+   "y": 89,
+   "w": 40,
+   "h": 14,
+   "type": "chart",
+   "name": "Top Markets by 24h Volume",
+   "description": "Top-15 markets by live 24h volume; orange = RWA/TradFi (heuristic).",
+   "explain": "The 15 Hyperliquid markets with the most trading volume over the last 24 hours, in US dollars.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_top_markets_bar.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_hdr_crypto",
+   "x": 0,
+   "y": 103,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "HYPE vs the Crypto Market",
+   "description": "HYPE vs the Crypto Market section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_crypto.json"
+   }
+  },
+  {
+   "id": "hy_vs_btc",
+   "x": 0,
+   "y": 105,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "HYPE vs BTC (rebased)",
+   "description": "HYPE and BTC indexed to 100 at first common date \u2014 relative performance.",
+   "explain": "The prices of HYPE and Bitcoin, each rebased to 100 on the first date both traded, to compare performance.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_vs_btc.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_corr",
+   "x": 20,
+   "y": 105,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "HYPE\u2013BTC Rolling Correlation",
+   "description": "30-day rolling correlation of HYPE and BTC daily returns \u2014 crypto-beta vs decoupled.",
+   "explain": "The 30-day rolling correlation between HYPE's and Bitcoin's daily returns, from -1 (move opposite) to +1 (move together).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_corr.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_corr_read",
+   "x": 0,
+   "y": 118,
+   "w": 40,
+   "h": 10,
+   "type": "markdown",
+   "name": "Correlation Read",
+   "description": "Correlation & beta to BTC with a bull/bear interpretation \u2014 is HYPE crypto-beta or a hedge?",
+   "explain": "A written summary of how closely HYPE has moved with Bitcoin: correlation, beta (how much HYPE moves per 1% move in Bitcoin), and what that means in rising and falling markets.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_corr_read.json"
+   }
+  },
+  {
+   "id": "hy_hdr_supply",
+   "x": 0,
+   "y": 128,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Supply, Unlocks & the Burn Race",
+   "description": "Supply, Unlocks & the Burn Race section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_supply.json"
+   }
+  },
+  {
+   "id": "hy_price",
+   "x": 0,
+   "y": 130,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "HYPE Price (full history)",
+   "description": "HYPE daily price since genesis (Hyperliquid candles, keyless).",
+   "explain": "The daily price of the HYPE token since it launched, in US dollars.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_price.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_supply_read",
+   "x": 20,
+   "y": 130,
+   "w": 20,
+   "h": 12,
+   "type": "markdown",
+   "name": "Supply & Unlocks",
+   "description": "Circulating vs total supply, dilution, team vesting, future emissions, and the burn race.",
+   "explain": "A written summary of HYPE's token supply: how much is circulating versus the total, scheduled team unlocks and emissions, and the buybacks that offset them.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_supply_read.json"
+   }
+  },
+  {
+   "id": "hy_hdr_monopoly",
+   "x": 0,
+   "y": 142,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Market Structure & Monopoly Dynamics",
+   "description": "Market Structure & Monopoly Dynamics section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_monopoly.json"
+   }
+  },
+  {
+   "id": "hy_concentration",
+   "x": 0,
+   "y": 144,
+   "w": 20,
+   "h": 15,
+   "type": "chart",
+   "name": "Fee Share by Venue",
+   "description": "Share of category fees (30d): derivatives (purple) vs spot DEXs (green); Hyperliquid highlighted blue.",
+   "explain": "Each exchange's share of total fees in its category over the last 30 days, for derivatives exchanges and for spot decentralized exchanges.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_concentration.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_monopoly_read",
+   "x": 20,
+   "y": 144,
+   "w": 20,
+   "h": 15,
+   "type": "markdown",
+   "name": "Monopoly Dynamics",
+   "description": "Order-book winner-take-most vs AMM fragmentation; HHI concentration vs Uniswap/Curve/CEXs.",
+   "explain": "A written comparison of market concentration across crypto exchanges, using the Herfindahl-Hirschman Index (HHI), a standard measure where higher means more of the market sits with fewer players.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_monopoly_read.json"
+   }
+  },
+  {
+   "id": "hy_hdr_compete",
+   "x": 0,
+   "y": 159,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Competitive Landscape & Regulatory Arbitrage",
+   "description": "Competitive Landscape & Regulatory Arbitrage section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_compete.json"
+   }
+  },
+  {
+   "id": "hy_competitors",
+   "x": 0,
+   "y": 161,
+   "w": 40,
+   "h": 13,
+   "type": "table",
+   "name": "Competitive Landscape",
+   "description": "Hyperliquid vs Binance, Coinbase, dYdX, GMX, TradFi apps \u2014 model, custody, listing, fees, reg posture.",
+   "explain": "A side-by-side reference of Hyperliquid and competing venues: business model, who holds customer funds, how markets are listed, fees, and regulatory status.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_competitors.json"
+   }
+  },
+  {
+   "id": "hy_regarb_read",
+   "x": 0,
+   "y": 174,
+   "w": 40,
+   "h": 12,
+   "type": "markdown",
+   "name": "Regulatory Arbitrage",
+   "description": "The RWA wedge (NVDA/SP500/GOLD/OPENAI perps) that licensed custodial venues can't copy \u2014 moat and tail risk.",
+   "explain": "A written note on Hyperliquid's perpetual contracts on traditional assets such as stocks, indices and gold (real-world assets, or RWAs), which regulated exchanges can't easily offer.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_regarb_read.json"
+   }
+  },
+  {
+   "id": "hy_hdr_regimes",
+   "x": 0,
+   "y": 186,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Crypto vs TradFi Volume & BTC Regimes",
+   "description": "Crypto vs TradFi Volume & BTC Regimes section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_regimes.json"
+   }
+  },
+  {
+   "id": "hy_vol_mix",
+   "x": 0,
+   "y": 188,
+   "w": 20,
+   "h": 14,
+   "type": "chart",
+   "name": "Volume Mix \u2014 Core vs Builder/RWA",
+   "description": "Live 24h volume: core crypto perps vs each HIP-3 builder sub-dex (mostly RWA/TradFi).",
+   "explain": "The last 24 hours of trading volume split between Hyperliquid's core crypto perpetuals and each builder-deployed sub-exchange (HIP-3 markets, mostly traditional-asset perpetuals).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_vol_mix.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_rwa_vs_crypto",
+   "x": 20,
+   "y": 188,
+   "w": 20,
+   "h": 14,
+   "type": "chart",
+   "name": "RWA vs Crypto Volume + BTC",
+   "description": "7d-avg notional volume: crypto-perp vs RWA/TradFi-perp basket, with BTC price (right axis).",
+   "explain": "Seven-day average daily trading volume for crypto perpetuals and for traditional-asset (RWA) perpetuals, alongside the Bitcoin price.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_rwa_vs_crypto.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_regime",
+   "x": 0,
+   "y": 202,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Volume by BTC Regime",
+   "description": "Avg daily notional for crypto vs RWA perps in BTC-up vs BTC-down months \u2014 beta/hedge/substitution.",
+   "explain": "Average daily trading volume for crypto and traditional-asset perpetuals, split between months when Bitcoin rose and months when it fell.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_regime.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_regime_read",
+   "x": 20,
+   "y": 202,
+   "w": 20,
+   "h": 13,
+   "type": "markdown",
+   "name": "Regime & Resilience Read",
+   "description": "Volume-vs-BTC correlation, regime split, and fee resilience (the bear-case haircut) with computed numbers.",
+   "explain": "A written summary of how Hyperliquid's volume and fees hold up across Bitcoin up and down markets.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_regime_read.json"
+   }
+  },
+  {
+   "id": "hy_hdr_income",
+   "x": 0,
+   "y": 215,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Income Streams",
+   "description": "Income Streams section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_income.json"
+   }
+  },
+  {
+   "id": "hy_income",
+   "x": 0,
+   "y": 217,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Income Streams (annualised)",
+   "description": "Revenue by stream: core perp fees, builder/RWA fees, spot, USDC collateral yield. Blended live + modeled.",
+   "explain": "Hyperliquid's annualized revenue broken down by source: core perpetual trading fees, builder and traditional-asset market fees, spot trading fees, and yield earned on USDC held as collateral. Part live data, part modeled.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_income.json"
+   },
+   "light": true
+  },
+  {
+   "id": "hy_income_read",
+   "x": 20,
+   "y": 217,
+   "w": 20,
+   "h": 12,
+   "type": "markdown",
+   "name": "Income Streams Read",
+   "description": "Stream breakdown, the non-crypto-beta growth levers, and rate-sensitivity of collateral yield.",
+   "explain": "A written breakdown of Hyperliquid's revenue streams, which ones don't depend on crypto prices, and how sensitive collateral yield is to interest rates.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_income_read.json"
+   }
+  },
+  {
+   "id": "hy_hdr_regulation",
+   "x": 0,
+   "y": 229,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Regulatory Outlook",
+   "description": "Regulatory Outlook section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_hdr_regulation.json"
+   }
+  },
+  {
+   "id": "hy_reg_read",
+   "x": 0,
+   "y": 231,
+   "w": 40,
+   "h": 13,
+   "type": "markdown",
+   "name": "Regulatory Outlook",
+   "description": "US posture, securities/CFTC risk on equity perps, CLARITY-act upside, stablecoin angle \u2014 facts vs open questions.",
+   "explain": "A written summary of the regulatory picture for Hyperliquid in the US: securities and CFTC questions around stock perpetuals, pending market-structure legislation, and stablecoins.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "hy_reg_read.json"
+   }
+  }
+ ]
+}
