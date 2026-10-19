@@ -33,7 +33,7 @@ NOTES = {
     "re_us_caseshiller": "The S&P CoreLogic Case-Shiller US National Home Price Index, which tracks repeat sales of the same single-family homes to measure price changes, shown as a level and as the year-over-year change.",
     "re_us_mortgage": "Average 30-year and 15-year fixed mortgage rates (Freddie Mac), and the spread of the 30-year rate over the 10-year Treasury yield, which reflects lender margins and prepayment risk.",
     "re_us_supply": "Housing starts (new homes on which construction began) and building permits (homes authorized to be built), as seasonally adjusted annual rates in thousands of units.",
-    "re_us_sales": "Monthly sales of newly built and existing homes, at seasonally adjusted annual rates, plus months' supply: how long the current inventory of new homes would last at the current sales pace.",
+    "re_us_sales": "New single-family homes sold each month, expressed as a seasonally adjusted annual rate in thousands, from the Census Bureau. Months' supply is how long the current inventory of new homes for sale would last at the current sales pace.",
     "re_us_listings": "Realtor.com's count of active for-sale listings nationwide, and the median number of days a listing stays on the market.",
     "re_us_delinquency": "The share of single-family residential mortgages held by US banks that are 30 or more days past due.",
     "re_sf_caseshiller": "The S&P CoreLogic Case-Shiller Home Price Index for the San Francisco metro area, based on repeat sales of the same homes, as a level and as the year-over-year change.",
