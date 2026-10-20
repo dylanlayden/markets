@@ -70,7 +70,7 @@
     return items.map((l, k) => `<span><i style="background:${C[k]}"></i>${esc(l)}</span>`).join("");
   }
 
-  fetch("data/index.json").then(r => r.json()).then(idx => {
+  fetch("data/index.json", {cache: "no-cache"}).then(r => r.json()).then(idx => {
     const a = asOf(idx.generated_at);
     const box = document.getElementById("asof");
     box.textContent = a.long.split(" · ")[0];

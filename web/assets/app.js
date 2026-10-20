@@ -10,7 +10,7 @@
   const makeKey = o => Object.keys(o).sort().map(k => `${k}=${o[k]}`).join("&");
 
   const getJSON = url => {
-    if (!cache.has(url)) cache.set(url, fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }));
+    if (!cache.has(url)) cache.set(url, fetch(url, {cache: "no-cache"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }));
     return cache.get(url);
   };
 
@@ -19,7 +19,7 @@
   const tiles = [];
   dark.addEventListener("change", () => tiles.filter(t => t.type === "chart" && t._rendered).forEach(t => render(t, true)));
 
-  fetch("data/index.json").then(r => r.json()).then(idx => {
+  fetch("data/index.json", {cache: "no-cache"}).then(r => r.json()).then(idx => {
     document.getElementById("nav").innerHTML = idx.apps.map(a =>
       `<a href="app.html?app=${a.slug}" class="${a.slug === slug ? "on" : ""}">${esc(a.name)}</a>`).join("");
     const i = idx.apps.findIndex(a => a.slug === slug);
