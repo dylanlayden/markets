@@ -83,3 +83,6 @@ a.stat:hover { border-color: var(--link); color: var(--ink); text-decoration: no
   .card { flex-basis: 78vw; max-width: 290px; }
   .hero { padding: 32px 0 24px; }
 }
+
+/* link-preview capture (build_site.py screenshots /?og at 1440x756) */
+.og .mast, .og #dashboards .section-label, .og #about, .og .foot { display: none; }

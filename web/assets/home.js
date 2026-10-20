@@ -1,6 +1,8 @@
 /* Homepage: byline, dashboard cards and their mini charts (plain SVG, no Plotly).
    Preview kinds come from build_site.py: line, curve, bars, flow (line may set log). */
 (() => {
+  // ?og: the build screenshots the homepage for the link-preview image (see build_site.py)
+  if (new URLSearchParams(location.search).has("og")) document.documentElement.classList.add("og");
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const tip = document.getElementById("tip");
   const C = ["var(--s1)", "var(--s2)", "var(--s3)", "var(--s4)"];
@@ -53,7 +55,7 @@
       return `<${tag} class="stat"${s.href ? ` href="${s.href}"` : ""}${s.title ? ` title="${esc(s.title)}"` : ""}>
         ${s.icon}<b data-n="${s.n}">${s.n}</b> ${esc(s.label)}</${tag}>`;
     }).join("");
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.classList.contains("og")) return;
     const nums = [...box.querySelectorAll("b[data-n]")], t0 = performance.now(), dur = 900;
     nums.forEach(b => { b.style.minWidth = `${b.offsetWidth}px`; b.textContent = "0"; });
     const tick = now => {

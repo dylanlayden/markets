@@ -339,8 +339,44 @@ def source_names(apps: list[dict]) -> list[str]:
     return sorted(seen.values(), key=str.lower)
 
 
+CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
+
+def screenshot_og() -> bool:
+    """1200x630 link preview (LinkedIn, Slack, iMessage): a screenshot of the built homepage.
+
+    Serves site/ on a throwaway port, captures it with headless Chrome at 1440x756 (2x) in
+    the homepage's ?og mode (no nav bar, no count-up), then scales to 1200x630 with sips.
+    Returns False if Chrome or sips is missing so the build can fall back to build_og().
+    """
+    import functools, http.server, subprocess, tempfile, threading
+    if not Path(CHROME).exists() or not shutil.which("sips"):
+        return False
+    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(SITE))
+    handler.log_message = lambda *a, **k: None
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            shot = Path(tmp) / "og.png"
+            subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars",
+                            "--force-prefers-reduced-motion",
+                            "--window-size=1440,756", "--force-device-scale-factor=2",
+                            "--virtual-time-budget=8000", f"--screenshot={shot}",
+                            f"http://127.0.0.1:{srv.server_port}/?og"],
+                           check=True, capture_output=True, timeout=90)
+            subprocess.run(["sips", "-z", "630", "1200", str(shot), "--out", str(SITE / "og.png")],
+                           check=True, capture_output=True, timeout=30)
+        return True
+    except Exception as e:  # noqa: BLE001 — a missing preview should never fail the build
+        log(f"  og screenshot failed, drawing instead: {e}")
+        return False
+    finally:
+        srv.shutdown()
+
+
 def build_og(summary: list[dict]) -> None:
-    """1200x630 link-preview image (LinkedIn, Slack, iMessage) drawn from today's previews."""
+    """Fallback link preview drawn with matplotlib from today's previews (no Chrome)."""
     try:
         import math
         import matplotlib
@@ -501,7 +537,8 @@ def main() -> int:
 
     (DATA / "index.json").write_text(json.dumps({"generated_at": NOW, "apps": summary,
                                                  "sources": source_names(SHOWCASE)}, indent=1))
-    build_og(summary)
+    if not screenshot_og():
+        build_og(summary)
 
     bad = secret_scan()
     if bad:
