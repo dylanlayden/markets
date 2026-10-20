@@ -2,7 +2,9 @@
    Preview kinds come from build_site.py: line, curve, bars, flow (line may set log). */
 (() => {
   // ?og: the build screenshots the homepage for the link-preview image (see build_site.py)
-  if (new URLSearchParams(location.search).has("og")) document.documentElement.classList.add("og");
+  const ogq = new URLSearchParams(location.search);
+  if (ogq.has("og")) document.documentElement.classList.add("og");
+  if (ogq.get("og")) document.documentElement.dataset.solo = ogq.get("og");  // ?og=N: card N alone
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const tip = document.getElementById("tip");
   const C = ["var(--s1)", "var(--s2)", "var(--s3)", "var(--s4)"];

@@ -340,16 +340,18 @@ def source_names(apps: list[dict]) -> list[str]:
 
 
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+OG_COVER = "credit"   # dashboard whose homepage card is the link-preview cover (credit spreads)
 
 
 def screenshot_og() -> bool:
     """1200x630 link preview (LinkedIn, Slack, iMessage): a screenshot of the built homepage.
 
     Serves site/ on a throwaway port, captures it with headless Chrome at 1200x630 (2x) in
-    the homepage's ?og mode (2x2 cards, no nav bar or count-up), then scales to 1200x630 with sips.
+    the homepage's ?og=N mode (card N alone, no nav bar or count-up), then scales to 1200x630 with sips.
     Returns False if Chrome or sips is missing so the build can fall back to build_og().
     """
     import functools, http.server, subprocess, tempfile, threading
+    og_card = next(i for i, c in enumerate(SHOWCASE, 1) if c["slug"] == OG_COVER)
     if not Path(CHROME).exists() or not shutil.which("sips"):
         return False
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(SITE))
@@ -363,7 +365,7 @@ def screenshot_og() -> bool:
                             "--force-prefers-reduced-motion",
                             "--window-size=1200,630", "--force-device-scale-factor=2",
                             "--virtual-time-budget=8000", f"--screenshot={shot}",
-                            f"http://127.0.0.1:{srv.server_port}/?og"],
+                            f"http://127.0.0.1:{srv.server_port}/?og={og_card}"],
                            check=True, capture_output=True, timeout=90)
             subprocess.run(["sips", "-z", "630", "1200", str(shot), "--out", str(SITE / "og.png")],
                            check=True, capture_output=True, timeout=30)

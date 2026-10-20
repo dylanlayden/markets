@@ -97,3 +97,14 @@ a.stat:hover { border-color: var(--link); color: var(--ink); text-decoration: no
 .og .card h3 { min-height: 0; margin: 0 0 2px; font-size: 19px; }
 .og .fig-legend { min-height: 0; margin: 2px 0 4px; }
 .og .chart { height: 150px; }
+
+/* ?og=N: one dashboard card fills the preview */
+[data-solo] .hero h1 { font-size: 40px; margin-bottom: 12px; }
+[data-solo] .cards { grid-template-columns: 1fr; }
+[data-solo="1"] .card:not(:nth-child(1)), [data-solo="2"] .card:not(:nth-child(2)),
+[data-solo="3"] .card:not(:nth-child(3)), [data-solo="4"] .card:not(:nth-child(4)) { display: none; }
+[data-solo] .card { padding: 14px 22px 10px; }
+[data-solo] .card h3 { font-size: 26px; }
+[data-solo] .fig-title { font-size: 17px; }
+[data-solo] .fig-legend { font-size: 15px; margin: 6px 0 8px; }
+[data-solo] .chart { height: 372px; }
