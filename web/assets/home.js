@@ -1,5 +1,5 @@
 /* Homepage: byline, dashboard cards and their mini charts (plain SVG, no Plotly).
-   Preview kinds come from build_site.py: line, curve, bars, flow. */
+   Preview kinds come from build_site.py: line, curve, bars, flow (line may set log). */
 (() => {
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const tip = document.getElementById("tip");
@@ -154,8 +154,14 @@
       const all = p.series.flatMap(s => s.y);
       lo = Math.min(...all); hi = Math.max(...all);
     }
-    const ticks = niceTicks(lo, hi, 3);
-    lo = Math.min(lo, ticks[0]); hi = Math.max(hi, last(ticks));
+    let ticks;
+    if (p.log) {  // fixed 1-2-5 steps; the scale works in log10 units
+      ticks = [0.1, 0.25, 0.5, 1, 2, 5, 10, 20, 50].filter(v => v >= lo * 0.98 && v <= hi * 1.02);
+      lo = Math.log10(lo * 0.9); hi = Math.log10(hi * 1.1);
+    } else {
+      ticks = niceTicks(lo, hi, 3);
+      lo = Math.min(lo, ticks[0]); hi = Math.max(hi, last(ticks));
+    }
 
     // x scale: dates (line, bars) or log maturity (curve)
     const xs = curve ? p.series[0].x : bars ? p.x.map(d => +day(d)) : null;
@@ -164,14 +170,14 @@
     const t1 = curve ? xv(last(xs)) : bars ? last(xs) : Math.max(...p.series.map(s => +day(last(s.x))));
     const plotW = W - padL - padR;
     const X = t => padL + (t - t0) / (t1 - t0 || 1) * plotW;
-    const Y = v => padT + (1 - (v - lo) / (hi - lo || 1)) * (H - padT - padB);
+    const Y = v => padT + (1 - ((p.log ? Math.log10(v) : v) - lo) / (hi - lo || 1)) * (H - padT - padB);
 
     let svg = "";
     for (const v of ticks) {
       svg += `<line class="gl" x1="${padL}" x2="${W - padR}" y1="${Y(v)}" y2="${Y(v)}"/>`;
       svg += `<text class="ax" x="${padL - 5}" y="${Y(v) + 3.5}" text-anchor="end">${TICK[p.fmt](v)}</text>`;
     }
-    if (lo < 0 && hi > 0) svg += `<line class="zero" x1="${padL}" x2="${W - padR}" y1="${Y(0)}" y2="${Y(0)}"/>`;
+    if (!p.log && lo < 0 && hi > 0) svg += `<line class="zero" x1="${padL}" x2="${W - padR}" y1="${Y(0)}" y2="${Y(0)}"/>`;
 
     if (curve) {
       const show = ["3M", "2Y", "10Y", "30Y"];

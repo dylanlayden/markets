@@ -79,9 +79,9 @@ SHOWCASE = [
         "slug": "credit",
         "blurb": "Corporate credit, consumer credit and US government debt: leverage, ratings, defaults, spreads, household debt and federal borrowing.",
         "sources": "Federal Reserve (Z.1 Financial Accounts, SLOOS, G.19, excess bond premium, Distributional Financial Accounts); BIS; ICE BofA and Moody's via FRED; New York Fed Household Debt and Credit Report; U.S. Treasury Fiscal Data; BEA; S&P Global Ratings 2024 annual default study (curated).",
-        "preview": {"tile": "cr_corp_debt_gdp", "kind": "line", "fmt": "pct",
-                    "series": [["Nonfinancial corporate debt", "Corporate debt"]],
-                    "caption": "US nonfinancial corporate debt as % of GDP"},
+        "preview": {"tile": "cr_spreads_rating", "kind": "line", "fmt": "pct", "log": True,
+                    "series": [["AAA", "AAA"], ["BBB", "BBB"], ["BB", "BB"], ["CCC & lower", "CCC"]],
+                    "caption": "US corporate credit spreads by rating"},
     },
 ]
 
@@ -107,7 +107,7 @@ def _thin(pts: list, n: int = PREVIEW_POINTS) -> list:
 def build_preview(cfg: dict, tiles: list[dict], outdir: Path) -> dict | None:
     """Small chart for the homepage card, taken from one of the app's own charts.
 
-    kind  line  — time series, one or two lines
+    kind  line  — time series, up to four lines (log: true for a log y axis)
           curve — numeric x with tick labels (yield curve), one or two lines
           bars  — stacked +/- bars over time; a series may sum several traces
           flow  — two-stage Sankey (supply parts → total → demand parts)
@@ -118,7 +118,8 @@ def build_preview(cfg: dict, tiles: list[dict], outdir: Path) -> dict | None:
     try:
         tile = next(t for t in tiles if t["id"] == pc["tile"])
         fig = json.loads((outdir / tile["variants"][tile["default"]]).read_text())
-        out = {"kind": pc["kind"], "caption": pc["caption"], "fmt": pc["fmt"], "tile": tile["name"]}
+        out = {"kind": pc["kind"], "caption": pc["caption"], "fmt": pc["fmt"], "tile": tile["name"],
+               "log": bool(pc.get("log"))}
 
         if pc["kind"] == "flow":
             d = fig["data"][0]
@@ -353,7 +354,7 @@ def build_og(summary: list[dict]) -> None:
     serif = FontProperties(fname=sup + "Georgia Bold.ttf")
     sans = FontProperties(fname="/System/Library/Fonts/Helvetica.ttc")
     BG, INK, INK2, MUTED, RULE, GRID = "#f8f7f3", "#16191d", "#4a505a", "#6b7280", "#d9d5ca", "#ece9e1"
-    S1, S2 = "#2b5c9e", "#c0702a"
+    S1, S2, S3, S4 = "#2b5c9e", "#c0702a", "#178a70", "#8f4ca3"
 
     fig = plt.figure(figsize=(12, 6.3), dpi=100, facecolor=BG)
     fig.text(0.05, 0.875, "SELECTED RESEARCH DASHBOARDS", fontproperties=sans, fontsize=13, color=MUTED)
@@ -392,15 +393,17 @@ def build_og(summary: list[dict]) -> None:
             ax.set_xticks([])
             ax.grid(False)
             continue
-        for k, ser in enumerate(pv["series"][:2]):
+        for k, ser in enumerate(pv["series"][:4]):
             if pv["kind"] == "curve":
                 xs = [math.log(v) for v in ser["x"]]
             else:
                 xs = [dt.date.fromisoformat(d).toordinal() for d in ser["x"]]
-            ax.plot(xs, ser["y"], color=(S1, S2)[k], lw=2.4 if k == 0 else 2, label=ser["label"])
+            ax.plot(xs, ser["y"], color=(S1, S2, S3, S4)[k], lw=2.4 if k == 0 else 2, label=ser["label"])
         if len(pv["series"]) > 1:
             leg = ax.legend(loc="lower left", bbox_to_anchor=(-0.17, 1.02), frameon=False, prop=sans,
-                            labelcolor=INK2, handlelength=1.4, ncols=2, borderaxespad=0, columnspacing=1.2)
+                            labelcolor=INK2, handlelength=1.4 if len(pv["series"]) < 3 else 0.9,
+                            ncols=min(4, len(pv["series"])), borderaxespad=0,
+                            columnspacing=1.2 if len(pv["series"]) < 3 else 0.6)
             for t in leg.get_texts():
                 t.set_fontsize(10)
         if pv["kind"] == "curve":
@@ -410,9 +413,15 @@ def build_og(summary: list[dict]) -> None:
         else:
             xs0 = [dt.date.fromisoformat(d) for d in pv["series"][0]["x"]]
             ax.set_xticks([xs0[0].toordinal(), xs0[-1].toordinal()], [str(xs0[0].year), str(xs0[-1].year)])
+        if pv.get("log"):
+            ax.set_yscale("log")
+            ax.set_yticks([0.25, 0.5, 1, 2, 5, 10, 20])
+            ax.yaxis.set_minor_locator(plt.NullLocator())
+            ax.set_ylim(min(min(x["y"]) for x in pv["series"]) * 0.85, max(max(x["y"]) for x in pv["series"]) * 1.15)
         if pv["fmt"] == "pct":
             ax.yaxis.set_major_formatter(lambda v, _: f"{v:g}%")
-        ax.locator_params(axis="y", nbins=4)
+        if not pv.get("log"):
+            ax.locator_params(axis="y", nbins=4)
     asof = dt.datetime.fromisoformat(NOW).astimezone().strftime("%b %-d, %Y")
     fig.text(0.95, 0.03, f"Data as of {asof} · public sources · refreshed daily", fontproperties=sans,
              fontsize=10, color=MUTED, ha="right")
