@@ -1,7 +1,7 @@
 # Markets Research Terminal: public snapshot
 
-A read-only, daily-refreshed static website of research dashboards on macro, housing, gold
-and Hyperliquid cash flows. Live at **https://dylanlayden.github.io/markets/**.
+A read-only, daily-refreshed static website of research dashboards on macro, housing, gold,
+and credit and debt. Live at **https://dylanlayden.github.io/markets/**.
 
 The dashboards are computed by a private Python/FastAPI analytics backend (originally served
 into OpenBB Workspace). This repo holds only the snapshot tooling and the front end. No
@@ -39,6 +39,7 @@ Edit `SHOWCASE` in `build_site.py` to change which dashboards are published.
 ## Data
 
 Each dashboard credits its sources on the page. The data comes from public providers
-(FRED, CFTC, SEC, Zillow Research, Redfin Data Center, World Gold Council, LBMA, DefiLlama,
-Hyperliquid, CoinGecko, OKX, Yahoo Finance) and remains subject to their terms. It is shown
+(FRED, Federal Reserve, New York Fed, U.S. Treasury Fiscal Data, BIS, CFTC, Zillow Research,
+Redfin Data Center, World Gold Council, LBMA, Yahoo Finance; curated tables from S&P Global
+Ratings' annual default study) and remains subject to their terms. It is shown
 for research and educational purposes only and is not investment advice.

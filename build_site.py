@@ -44,8 +44,8 @@ WORKERS = 4            # the backend handles 30 concurrent; stay polite to upstr
 RETRIES = 3
 TIMEOUT = 240
 
-# Showcase apps, in display order. Gold Price Formation is off the homepage for now
-# (kept on the backend). Silver Market is held back: its core tiles are derived from
+# Showcase apps, in display order. Gold Price Formation and HYPE are off the homepage for
+# now (both kept on the backend; HYPE was replaced by Credit & Debt on 2026-10-19). Silver Market is held back: its core tiles are derived from
 # the World Silver Survey (licensed publication).
 SHOWCASE = [
     {
@@ -75,13 +75,13 @@ SHOWCASE = [
                     "caption": "Gold supply to demand, trailing four quarters"},
     },
     {
-        "name": "HYPE · Hyperliquid Cash Flow",
-        "slug": "hype",
-        "blurb": "Hyperliquid valued as a cash-flowing asset: fees, revenue, buybacks, multiples and market structure.",
-        "sources": "DefiLlama; Hyperliquid public info API; CoinGecko; OKX; FRED.",
-        "preview": {"tile": "hy_buyback_yield", "kind": "line", "fmt": "pct",
-                    "series": [["Buyback yield (30d-annualised rev ÷ mkt cap)", "Buyback yield"]],
-                    "caption": "HYPE buyback yield, annualized"},
+        "name": "Credit & Debt",
+        "slug": "credit",
+        "blurb": "Corporate credit, consumer credit and US government debt: leverage, ratings, defaults, spreads, household debt and federal borrowing.",
+        "sources": "Federal Reserve (Z.1 Financial Accounts, SLOOS, G.19, excess bond premium, Distributional Financial Accounts); BIS; ICE BofA and Moody's via FRED; New York Fed Household Debt and Credit Report; U.S. Treasury Fiscal Data; BEA; S&P Global Ratings 2024 annual default study (curated).",
+        "preview": {"tile": "cr_corp_debt_gdp", "kind": "line", "fmt": "pct",
+                    "series": [["Nonfinancial corporate debt", "Corporate debt"]],
+                    "caption": "US nonfinancial corporate debt as % of GDP"},
     },
 ]
 
