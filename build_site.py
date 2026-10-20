@@ -345,8 +345,8 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 def screenshot_og() -> bool:
     """1200x630 link preview (LinkedIn, Slack, iMessage): a screenshot of the built homepage.
 
-    Serves site/ on a throwaway port, captures it with headless Chrome at 1440x756 (2x) in
-    the homepage's ?og mode (no nav bar, no count-up), then scales to 1200x630 with sips.
+    Serves site/ on a throwaway port, captures it with headless Chrome at 1200x630 (2x) in
+    the homepage's ?og mode (2x2 cards, no nav bar or count-up), then scales to 1200x630 with sips.
     Returns False if Chrome or sips is missing so the build can fall back to build_og().
     """
     import functools, http.server, subprocess, tempfile, threading
@@ -361,7 +361,7 @@ def screenshot_og() -> bool:
             shot = Path(tmp) / "og.png"
             subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars",
                             "--force-prefers-reduced-motion",
-                            "--window-size=1440,756", "--force-device-scale-factor=2",
+                            "--window-size=1200,630", "--force-device-scale-factor=2",
                             "--virtual-time-budget=8000", f"--screenshot={shot}",
                             f"http://127.0.0.1:{srv.server_port}/?og"],
                            check=True, capture_output=True, timeout=90)

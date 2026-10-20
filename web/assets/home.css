@@ -84,5 +84,16 @@ a.stat:hover { border-color: var(--link); color: var(--ink); text-decoration: no
   .hero { padding: 32px 0 24px; }
 }
 
-/* link-preview capture (build_site.py screenshots /?og at 1440x756) */
-.og .mast, .og #dashboards .section-label, .og #about, .og .foot { display: none; }
+/* link-preview capture: build_site.py screenshots /?og at 1200x630 (2x) for og.png.
+   Title over the four cards in a 2x2 grid, sized to read at LinkedIn's thumbnail size. */
+.og .mast, .og #dashboards .section-label, .og #about, .og .foot,
+.og .eyebrow, .og .deck, .og .byline, .og .card-num, .og .card-foot, .og .fig-latest { display: none; }
+.og main.wrap { padding-top: 22px; }
+.og .hero { padding: 0; margin-top: 0; }
+.og .hero h1 { margin-bottom: 10px; font-size: 36px; }
+.og #dashboards { margin-top: 0; padding-top: 12px; }
+.og .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.og .card { padding: 10px 14px 8px; }
+.og .card h3 { min-height: 0; margin: 0 0 2px; font-size: 19px; }
+.og .fig-legend { min-height: 0; margin: 2px 0 4px; }
+.og .chart { height: 150px; }
