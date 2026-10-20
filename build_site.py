@@ -510,6 +510,15 @@ def fingerprint_assets() -> None:
         page.write_text(re.sub(r'(assets/[\w.-]+\.(?:css|js))"', stamp, html))
 
 
+def stamp_og_image() -> None:
+    """Version the og:image URL so LinkedIn and Slack fetch a new image instead of their cached one."""
+    og = SITE / "og.png"
+    if og.exists():
+        page = SITE / "index.html"
+        v = hashlib.sha1(og.read_bytes()).hexdigest()[:10]
+        page.write_text(re.sub(r'(/og\.png)(\?v=\w+)?"', rf'\1?v={v}"', page.read_text()))
+
+
 def main() -> int:
     t0 = time.time()
     widgets = get_json("/widgets.json")
@@ -539,6 +548,7 @@ def main() -> int:
                                                  "sources": source_names(SHOWCASE)}, indent=1))
     if not screenshot_og():
         build_og(summary)
+    stamp_og_image()
 
     bad = secret_scan()
     if bad:
