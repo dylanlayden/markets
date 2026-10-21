@@ -62,13 +62,10 @@ a.stat:hover { border-color: var(--link); color: var(--ink); text-decoration: no
 }
 .card-foot a { margin-left: auto; font: 500 13px var(--sans); }
 
-/* narrower screens: the row scrolls sideways instead of wrapping */
+/* narrower screens: two columns on tablets, one stacked column on phones (no sideways swiping) */
 @media (max-width: 960px) {
-  .cards {
-    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px;
-    margin: 0 -24px; padding: 0 24px 10px; scroll-padding: 0 24px;
-  }
-  .card { flex: 0 0 250px; scroll-snap-align: start; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .card h3 { min-height: 0; }
 }
 
 
@@ -79,8 +76,8 @@ a.stat:hover { border-color: var(--link); color: var(--ink); text-decoration: no
 
 
 @media (max-width: 640px) {
-  .cards { margin: 0 -16px; padding: 0 16px 10px; scroll-padding: 0 16px; }
-  .card { flex-basis: 78vw; max-width: 290px; }
+  .cards { grid-template-columns: 1fr; }
+  .chart { height: 170px; }
   .hero { padding: 32px 0 24px; }
 }
 
