@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markets Research Terminal · Dylan Layden</title>
+  <meta name="description" content="Research dashboards tracking macro and rates, housing, gold, and credit and debt, built from public data and refreshed daily.">
+  <meta property="og:title" content="Markets Research Terminal · Dylan Layden">
+  <meta property="og:description" content="Research dashboards on the markets I am tracking right now: macro and rates, housing, gold, and credit and debt. Built from public data and refreshed daily.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dylanlayden.github.io/markets/">
+  <meta property="og:image" content="https://dylanlayden.github.io/markets/og.png?v=809ee246ce">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Markets Research Terminal: preview charts for each dashboard">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="color-scheme" content="light dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+  <link rel="stylesheet" href="assets/theme.css?v=85ad37cec8">
+  <link rel="stylesheet" href="assets/home.css?v=0b7a653d9b">
+</head>
+<body>
+  <header class="mast">
+    <div class="wrap mast-row">
+      <a class="mast-name" href="./">Markets Research Terminal</a>
+      <nav class="mast-nav">
+        <a href="#dashboards">Dashboards</a>
+        <a href="#about">About</a>
+        <a href="https://github.com/dylanlayden/markets">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Selected research dashboards</p>
+      <h1>Markets Research Terminal</h1>
+      <p class="deck">No one tool had everything I wanted to see, so I built a single place to view it all. The dashboards below cover a few of the areas I'm tracking right now: macro and rates, housing, gold, and credit and debt across companies, households and the US government. The snapshot refreshes daily.</p>
+      <div class="byline">
+        <span>By <b>Dylan Layden</b></span>
+        <span id="asof" class="asof"></span>
+        <div class="stats" id="stats" aria-label="Site contents"></div>
+      </div>
+    </section>
+
+    <section id="dashboards" class="section">
+      <h2 class="section-label">Dashboards</h2>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <section id="about" class="section about">
+      <h2 class="section-label">About this project</h2>
+      <div class="about-grid">
+        <div>
+          <h3>Purpose</h3>
+          <p>Market data is spread across dozens of sources, and these dashboards put the series I follow side by side. The set changes as my focus does. Right now it covers the rates and macro backdrop, housing from the national level down to San Francisco ZIP codes, gold supply and demand, and credit conditions for companies, households and the federal government.</p>
+        </div>
+        <div>
+          <h3>Method</h3>
+          <p>Each dashboard is a Python module that fetches and caches its sources, runs the calculations (index rebasing, rolling betas, yield and multiple math, concentration indices, supply/demand balances), and returns Plotly figures, tables or written reads through FastAPI. The same backend originally powered these dashboards inside OpenBB Workspace. A build script snapshots every tile into this static site, checks each one for errors and keeps the last good version if a source fails.</p>
+        </div>
+        <div>
+          <h3>Data and freshness</h3>
+          <p>All data is public: FRED, the Federal Reserve, the New York Fed, the U.S. Treasury, the CFTC, Zillow, Redfin, the World Gold Council, LBMA and others, credited on each dashboard. A few tiles use tables transcribed from S&P Global Ratings' annual default study; they are marked as curated and updated yearly. The snapshot rebuilds daily. Each series updates on its own source's schedule, so monthly and quarterly data will lag the snapshot date. A tile marked <span class="stale-tag">stale</span> means its latest refresh failed and it is showing the previous good snapshot.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p>Data comes from the public sources credited on each dashboard and remains subject to those providers' terms. Shown for research and educational purposes only. Nothing here is investment advice.</p>
+    </div>
+  </footer>
+
+  <div class="tip" id="tip" role="tooltip" hidden></div>
+  <script src="assets/asof.js?v=2b2047125c"></script>
+  <script src="assets/home.js?v=2444569073"></script>
+</body>
+</html>

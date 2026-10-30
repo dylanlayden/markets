@@ -1,0 +1,456 @@
+{
+ "slug": "macro",
+ "name": "Macro Factors",
+ "blurb": "US rates, credit, inflation, growth, labor and global yields \u2014 20 charts with recession shading.",
+ "sources": "FRED (Federal Reserve Bank of St. Louis) via OpenBB Platform; NBER recession dates.",
+ "description": "US + global macro cockpit \u2014 themed Plotly charts on one scrolling page, grouped into sections. Overlays, NBER recession shading, reference lines, last-value labels, and in-chart 1Y/5Y/20Y range buttons. Data via FRED.",
+ "generated_at": "2026-10-30T17:01:35+00:00",
+ "groups": [],
+ "tiles": [
+  {
+   "id": "macro_hdr_rates",
+   "x": 0,
+   "y": 0,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Rates & Curve",
+   "description": "Rates & Curve section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_rates.json"
+   }
+  },
+  {
+   "id": "macro_yield_curve",
+   "x": 0,
+   "y": 2,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "US Yield Curve",
+   "description": "Treasury curve today vs 1Y & 2Y ago.",
+   "explain": "The yield on US Treasury debt at each maturity, from 3 months to 30 years. A yield is the annual return an investor earns by holding the bond to maturity; plotting every maturity at once gives the shape of the curve.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_yield_curve.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_treasury_yields",
+   "x": 20,
+   "y": 2,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Treasury Yields",
+   "description": "2Y / 10Y / 30Y yields with recession bands.",
+   "explain": "Market yields on 2-, 10- and 30-year US Treasuries. The 2-year mostly tracks expected Fed policy; the 10- and 30-year also price long-run growth, inflation and term risk.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_treasury_yields.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_policy_rates",
+   "x": 0,
+   "y": 14,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Policy Rates",
+   "description": "Fed Funds (EFFR) vs SOFR.",
+   "explain": "The effective federal funds rate (the average rate banks charge each other for overnight reserves, which the Fed targets) and SOFR (the overnight rate on loans secured by Treasuries, the main US lending benchmark).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_policy_rates.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_term_spreads",
+   "x": 20,
+   "y": 14,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Term Spreads",
+   "description": "10Y\u22122Y and 10Y\u22123M; below 0 = inversion.",
+   "explain": "The gap between long- and short-dated Treasury yields: 10-year minus 2-year, and 10-year minus 3-month, in percentage points. Below zero means the curve is inverted.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_term_spreads.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_hdr_inflation",
+   "x": 0,
+   "y": 26,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Inflation",
+   "description": "Inflation section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_inflation.json"
+   }
+  },
+  {
+   "id": "macro_cpi_vs_pce",
+   "x": 0,
+   "y": 28,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "CPI vs Core PCE (YoY)",
+   "description": "Headline CPI, Core CPI, Core PCE with 2% target.",
+   "explain": "Year-over-year inflation on three measures: headline CPI (all consumer prices), core CPI (excluding food and energy) and core PCE (the Fed's preferred gauge, built from a broader basket of spending).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_cpi_vs_pce.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_inflation_expectations",
+   "x": 0,
+   "y": 40,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Inflation Expectations",
+   "description": "10Y breakeven, 5Y5Y forward, UMich survey.",
+   "explain": "What markets and households expect inflation to be. The 10-year breakeven is the gap between nominal and inflation-protected Treasury yields; the 5y5y forward is expected average inflation five to ten years out; the University of Michigan figure is a consumer survey of the year ahead.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_inflation_expectations.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_headline_vs_core",
+   "x": 20,
+   "y": 40,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "CPI Headline vs Core",
+   "description": "Headline vs Core CPI, YoY.",
+   "explain": "The Consumer Price Index, year over year, with and without food and energy. Core strips out the most volatile components to show the underlying trend.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_headline_vs_core.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_hdr_growth",
+   "x": 0,
+   "y": 52,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Growth & Labor",
+   "description": "Growth & Labor section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_growth.json"
+   }
+  },
+  {
+   "id": "macro_real_gdp",
+   "x": 0,
+   "y": 54,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Real GDP (YoY)",
+   "description": "Real GDP year-over-year.",
+   "explain": "Inflation-adjusted US output (gross domestic product) compared with the same quarter a year earlier.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_real_gdp.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_unemployment",
+   "x": 20,
+   "y": 54,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Unemployment",
+   "description": "U-3 vs U-6 unemployment rate.",
+   "explain": "U-3 is the official unemployment rate: people without a job who are actively looking. U-6 adds discouraged workers and people working part-time who want full-time work.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_unemployment.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_payrolls",
+   "x": 0,
+   "y": 66,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Nonfarm Payrolls (\u0394)",
+   "description": "Monthly change in nonfarm payrolls.",
+   "explain": "The monthly change in the number of people on US non-farm payrolls, from the BLS establishment survey, in thousands of jobs.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_payrolls.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_jobless_claims",
+   "x": 20,
+   "y": 66,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Initial Jobless Claims",
+   "description": "Weekly initial unemployment claims.",
+   "explain": "The number of people filing a first claim for unemployment insurance each week. It's one of the most timely signals of layoffs.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_jobless_claims.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_hdr_markets",
+   "x": 0,
+   "y": 78,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Markets & Credit",
+   "description": "Markets & Credit section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_markets.json"
+   }
+  },
+  {
+   "id": "macro_credit_spreads",
+   "x": 0,
+   "y": 80,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "Credit Spreads (OAS)",
+   "description": "US High Yield vs Investment Grade OAS.",
+   "explain": "Option-adjusted spreads: the extra yield corporate bonds pay over Treasuries of similar maturity, after adjusting for embedded options. High yield covers below-investment-grade issuers; investment grade covers BBB and above.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_credit_spreads.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_sp500",
+   "x": 0,
+   "y": 92,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "S&P 500",
+   "description": "S&P 500 index.",
+   "explain": "The S&P 500 index: the market-cap-weighted price of 500 large US companies.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_sp500.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_vix",
+   "x": 20,
+   "y": 92,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "VIX",
+   "description": "CBOE Volatility Index.",
+   "explain": "The CBOE Volatility Index: the 30-day volatility the options market implies for the S&P 500, quoted as an annualized percentage. Often called the market's fear gauge.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_vix.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_wti",
+   "x": 0,
+   "y": 104,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "WTI Crude Oil",
+   "description": "West Texas Intermediate spot, $/bbl.",
+   "explain": "The spot price of West Texas Intermediate crude, the US benchmark grade of oil, in dollars per barrel.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_wti.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_mortgage",
+   "x": 20,
+   "y": 104,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "30Y Mortgage Rate",
+   "description": "US 30-year fixed mortgage rate.",
+   "explain": "The average rate on a new 30-year fixed-rate mortgage, from Freddie Mac's weekly survey of lenders.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_mortgage.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_hdr_global",
+   "x": 0,
+   "y": 116,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Global",
+   "description": "Global section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_global.json"
+   }
+  },
+  {
+   "id": "macro_global_10y",
+   "x": 0,
+   "y": 118,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "Global 10Y Yields",
+   "description": "US, Germany, Japan, UK 10Y government yields.",
+   "explain": "10-year government bond yields for the US, Germany, Japan and the UK: the benchmark long-term borrowing cost in each country.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_global_10y.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_global_cpi",
+   "x": 0,
+   "y": 130,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Global CPI (YoY)",
+   "description": "US, Euro area, Japan CPI YoY.",
+   "explain": "Year-over-year consumer price inflation for the US, the euro area and Japan.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_global_cpi.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_global_policy",
+   "x": 20,
+   "y": 130,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Global Policy Rates",
+   "description": "Fed vs ECB policy rates.",
+   "explain": "The main policy rate set by the Federal Reserve (effective fed funds rate) and the European Central Bank (deposit facility rate).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_global_policy.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_broad_usd",
+   "x": 0,
+   "y": 142,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "Broad USD Index",
+   "description": "Trade-weighted broad US dollar index.",
+   "explain": "The Federal Reserve's trade-weighted index of the dollar against the currencies of the US's major trading partners. Higher means a stronger dollar.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_broad_usd.json"
+   },
+   "light": true
+  }
+ ]
+}

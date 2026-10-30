@@ -1,0 +1,536 @@
+{
+ "slug": "gold",
+ "name": "Gold Market",
+ "blurb": "Gold supply and demand, central-bank buying, ETF flows, futures positioning and producers.",
+ "sources": "World Gold Council (Goldhub); LBMA; CFTC; Yahoo Finance.",
+ "description": "Follow the metal. A live read on the latest quarter's supply/demand balance; a mirror chart of supply up against demand down with price overlaid; the demand mix, a trailing-four-quarter flow Sankey and each segment against its own 5-year average; named, fund-level ETF inflows and outflows; central-bank buying and selling by country, top ten plus all others, with gold as a share of total reserves; the paper market by segment, by instrument, by venue open interest and by COMEX positioning, plus China and India local premiums; and the supply side \u2014 mix, the price elasticity of scrap, all-in sustaining cost against price, the industry cost curve, and a live producer screener. Keyless data: World Gold Council fsapi (supply & demand, central banks, volumes, open interest, COMEX, ETFs, production costs, premiums), LBMA price JSON, yfinance for the equities. Reported central-bank data can include revaluations and swaps; company-level jewellery/technology/refining tonnage is not public and those tiles are labelled CURATED. Not investment advice.",
+ "generated_at": "2026-10-30T17:01:35+00:00",
+ "groups": [],
+ "tiles": [
+  {
+   "id": "gd_hdr_read",
+   "x": 0,
+   "y": 0,
+   "w": 40,
+   "h": 4,
+   "type": "markdown",
+   "name": "\u2460 The Read",
+   "description": "\u2460 The Read section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_hdr_read.json"
+   }
+  },
+  {
+   "id": "gd_read",
+   "x": 0,
+   "y": 4,
+   "w": 40,
+   "h": 15,
+   "type": "markdown",
+   "name": "The Read",
+   "description": "Auto-generated narrative on the latest quarter: supply vs demand and the residual, the biggest demand mover vs its own 4-quarter average, central-bank pace vs the 5-year average, ETF flow, and where recycling sits relative to price. Recomputed live \u2014 no hardcoded numbers.",
+   "explain": "A written summary generated from the latest quarter of World Gold Council data: supply against demand, the biggest movers, central-bank buying, ETF flows and recycling.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_read.json"
+   }
+  },
+  {
+   "id": "gd_hdr_balance",
+   "x": 0,
+   "y": 19,
+   "w": 40,
+   "h": 4,
+   "type": "markdown",
+   "name": "\u2461 Balance & Price",
+   "description": "\u2461 Balance & Price section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_hdr_balance.json"
+   }
+  },
+  {
+   "id": "gd_kpi",
+   "x": 0,
+   "y": 23,
+   "w": 40,
+   "h": 10,
+   "type": "markdown",
+   "name": "Gold KPIs",
+   "description": "Spot price and 1-year change, latest-quarter supply and demand, the OTC residual, central-bank net, ETF flow, and recycled share of supply.",
+   "explain": "Headline gold figures: spot price and its one-year change, total supply and demand for the latest quarter, the unexplained residual, central-bank net purchases, ETF flows, and recycling's share of supply.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_kpi.json"
+   }
+  },
+  {
+   "id": "gd_mirror",
+   "x": 0,
+   "y": 33,
+   "w": 40,
+   "h": 20,
+   "type": "chart",
+   "name": "Supply / Demand Mirror",
+   "description": "The hero view. Supply stacked upward (mine, scrap, producer hedging), demand stacked downward (jewellery, technology, bars & coins, ETFs, central banks), LBMA price on the right axis. Quarterly since Q1 2010. Hover shows true positive tonnage for demand.",
+   "explain": "Quarterly gold supply in tonnes (mine production, recycled scrap, net producer hedging) set against demand (jewellery, technology, bars and coins, ETFs, central banks), with the LBMA gold price for reference.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_mirror.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_hdr_uses",
+   "x": 0,
+   "y": 53,
+   "w": 40,
+   "h": 4,
+   "type": "markdown",
+   "name": "\u2462 Where Gold Goes",
+   "description": "\u2462 Where Gold Goes section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_hdr_uses.json"
+   }
+  },
+  {
+   "id": "gd_demand_mix",
+   "x": 0,
+   "y": 57,
+   "w": 20,
+   "h": 16,
+   "type": "chart",
+   "name": "Demand Mix \u2014 Share of Net Demand",
+   "description": "Each top-level segment as a share of net measured demand, every quarter since 2010. This is where the structural rotation lives: jewellery's share falling, central banks' rising. ETF net demand goes negative in redemption quarters, so it appears below the axis and the positive stack rises above the 100% line \u2014 the net still sums to 100%.",
+   "explain": "Each demand category as a share of total measured demand in the quarter. ETF demand can be negative when funds sell more gold than they buy.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_demand_mix.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_sankey",
+   "x": 20,
+   "y": 57,
+   "w": 20,
+   "h": 16,
+   "type": "chart",
+   "name": "Supply \u2192 Demand Flow (trailing 4Q)",
+   "description": "Mine production and recycled scrap into total supply, then out to the five demand segments plus the OTC/unreported residual. Trailing four quarters, tonnes and share of supply on every node.",
+   "explain": "How gold supply is used over the last four quarters: mine output and recycled scrap combine into total supply, which is split across the demand categories. The OTC and unreported line is the gap between supply and measured demand.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_sankey.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_vs_trend",
+   "x": 0,
+   "y": 73,
+   "w": 40,
+   "h": 14,
+   "type": "chart",
+   "name": "Latest Quarter vs 5-Year Average",
+   "description": "Each demand segment's latest quarter minus its trailing 5-year quarterly average, in tonnes and percent, diverging around zero.",
+   "explain": "The latest quarter's demand in each category minus that category's average quarter over the past five years, in tonnes and percent.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_vs_trend.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_hdr_buyers",
+   "x": 0,
+   "y": 87,
+   "w": 40,
+   "h": 4,
+   "type": "markdown",
+   "name": "\u2463 Who's Buying",
+   "description": "\u2463 Who's Buying section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_hdr_buyers.json"
+   }
+  },
+  {
+   "id": "gd_etf_funds",
+   "x": 0,
+   "y": 91,
+   "w": 40,
+   "h": 18,
+   "type": "table",
+   "name": "ETF Funds \u2014 Biggest Inflows and Outflows (LIVE)",
+   "description": "LIVE, named, per-fund data: the ten largest year-to-date inflows and the ten largest outflows across physically-backed gold ETFs. Sorted by flow descending; click any header to re-rank.",
+   "explain": "Individual physically backed gold ETFs with the largest year-to-date inflows and outflows. A flow is the net amount of gold a fund added or sold as investors bought or redeemed shares.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_etf_funds.json"
+   }
+  },
+  {
+   "id": "gd_demand_country",
+   "x": 0,
+   "y": 109,
+   "w": 40,
+   "h": 15,
+   "type": "chart",
+   "name": "Geographic Read \u2014 ETF Flows by Country (YTD)",
+   "description": "Year-to-date ETF fund flows by country of listing, diverging around zero, with holdings and tonnage demand in the hover. The WGC supply-and-demand feed does not expose consumer demand by country, so the ETF country block is the geographic read available keyless.",
+   "explain": "Net year-to-date flows into gold ETFs, grouped by the country where each fund is listed.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_demand_country.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_buyers_curated",
+   "x": 0,
+   "y": 124,
+   "w": 40,
+   "h": 26,
+   "type": "markdown",
+   "name": "Major Buyers & Refiners \u2014 Curated Reference",
+   "description": "CURATED, not live. Who the major jewellery groups, technology/semiconductor buyers and refiners are. Company-level tonnage in these segments is Metals Focus proprietary and has no free feed, so no tonnage is shown \u2014 deliberately.",
+   "explain": "A reference list of the main companies in each part of the gold market: jewellery groups, technology and semiconductor buyers, and refiners. It's curated by hand, not live data.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_buyers_curated.json"
+   }
+  },
+  {
+   "id": "gd_hdr_cb",
+   "x": 0,
+   "y": 150,
+   "w": 40,
+   "h": 4,
+   "type": "markdown",
+   "name": "\u2464 Central Banks",
+   "description": "\u2464 Central Banks section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_hdr_cb.json"
+   }
+  },
+  {
+   "id": "gd_cb_flows",
+   "x": 0,
+   "y": 154,
+   "w": 40,
+   "h": 16,
+   "type": "chart",
+   "name": "Central Banks \u2014 Annual Net Change",
+   "description": "Annual net change in reported gold reserves by country, stacked. The ten largest movers by total absolute change since 2000, plus every remaining country collapsed into one 'All other countries' series \u2014 eleven series, never more. Buying above the axis, selling below.",
+   "explain": "The yearly change in each country's reported official gold reserves, in tonnes. Positive means the central bank bought gold; negative means it sold.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_cb_flows.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_cb_cumulative",
+   "x": 0,
+   "y": 170,
+   "w": 40,
+   "h": 16,
+   "type": "chart",
+   "name": "Central Banks \u2014 Cumulative Since 2000",
+   "description": "Cumulative net change in reported reserves since 2000, same top-10-plus-others grouping, as lines. Separates structural accumulators from episodic ones.",
+   "explain": "The running total of each country's change in reported gold reserves since 2000, in tonnes.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_cb_cumulative.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_cb_table",
+   "x": 0,
+   "y": 186,
+   "w": 40,
+   "h": 18,
+   "type": "table",
+   "name": "Central Banks \u2014 Holdings & Changes",
+   "description": "Every reporting country: gold as a percentage of total reserves (the column that separates structurally gold-heavy central banks from merely large ones), holdings in tonnes and US$mn, and 1-year and 5-year changes. Sortable.",
+   "explain": "Every reporting central bank's gold holdings in tonnes and US dollars, gold as a share of its total reserves, and the change over one and five years.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_cb_table.json"
+   }
+  },
+  {
+   "id": "gd_hdr_paper",
+   "x": 0,
+   "y": 204,
+   "w": 40,
+   "h": 4,
+   "type": "markdown",
+   "name": "\u2465 Paper vs Physical",
+   "description": "\u2465 Paper vs Physical section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_hdr_paper.json"
+   }
+  },
+  {
+   "id": "gd_vol_segment",
+   "x": 0,
+   "y": 208,
+   "w": 20,
+   "h": 15,
+   "type": "chart",
+   "name": "Trading Volume by Segment",
+   "description": "Average daily volume in US$bn for the latest reported month, split OTC / exchanges / ETFs with each venue shown inside its group.",
+   "explain": "Average daily gold trading value in US$ billions for the latest month, split by where it trades: over the counter (mainly the London market), on futures exchanges, and through ETFs.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_vol_segment.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_vol_instrument",
+   "x": 20,
+   "y": 208,
+   "w": 20,
+   "h": 15,
+   "type": "chart",
+   "name": "Trading Volume by Instrument",
+   "description": "The same volume re-cut with instrument type as the organising axis: spot, futures, options, swaps and forwards, loans/leases/deposits, spot-deferred, and ETFs.",
+   "explain": "The same average daily trading value grouped by instrument type: spot, futures, options, swaps and forwards, loans and deposits, spot-deferred contracts, and ETFs.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_vol_instrument.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_oi_venues",
+   "x": 0,
+   "y": 223,
+   "w": 40,
+   "h": 15,
+   "type": "chart",
+   "name": "Open Interest by Venue",
+   "description": "Weekly open interest across every reporting venue over ~3 years, stacked. Switch the view to Shares to see the eastward drift \u2014 Shanghai's share against COMEX. Venues reporting zero throughout are dropped.",
+   "explain": "Open interest on each gold futures exchange: the value of all futures contracts still outstanding (not yet closed or settled), in US$ billions.",
+   "params": [
+    {
+     "name": "view",
+     "label": "View",
+     "options": [
+      {
+       "label": "Levels (US$bn)",
+       "value": "Levels"
+      },
+      {
+       "label": "Shares (%)",
+       "value": "Shares"
+      }
+     ]
+    }
+   ],
+   "group": null,
+   "default": "view=Levels",
+   "variants": {
+    "view=Levels": "gd_oi_venues__60f325218d.json",
+    "view=Shares": "gd_oi_venues__d0149930a9.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_comex_pos",
+   "x": 0,
+   "y": 238,
+   "w": 20,
+   "h": 14,
+   "type": "chart",
+   "name": "COMEX Money-Manager Net Long",
+   "description": "Weekly money-manager net long position in tonnes against the COMEX gold price on the right axis. CFTC Commitments of Traders, via WGC.",
+   "explain": "The net long position of money managers (hedge funds and other speculators) in COMEX gold futures: contracts betting on a rise minus those betting on a fall, in tonnes, from the CFTC's weekly Commitments of Traders report.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_comex_pos.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_premiums",
+   "x": 20,
+   "y": 238,
+   "w": 20,
+   "h": 14,
+   "type": "chart",
+   "name": "China & India Local Premium / Discount",
+   "description": "Local gold price against international spot, US$/oz. Physical tightness and physical indifference both show up here before they show up in spot.",
+   "explain": "The difference between the local gold price in China and India and the international spot price, in US$ per ounce. A premium means local buyers are paying more than the global price; a discount means less.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_premiums.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_hdr_supply",
+   "x": 0,
+   "y": 252,
+   "w": 40,
+   "h": 4,
+   "type": "markdown",
+   "name": "\u2466 Supply",
+   "description": "\u2466 Supply section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_hdr_supply.json"
+   }
+  },
+  {
+   "id": "gd_supply_mix",
+   "x": 0,
+   "y": 256,
+   "w": 40,
+   "h": 15,
+   "type": "chart",
+   "name": "Supply Mix",
+   "description": "Mine production, recycled scrap and net producer hedging, quarterly, with the LBMA price overlaid on the right axis.",
+   "explain": "Quarterly gold supply by source, in tonnes: newly mined gold, recycled scrap, and net producer hedging (miners selling future output forward, or buying it back).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_supply_mix.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_recycle_elasticity",
+   "x": 0,
+   "y": 271,
+   "w": 40,
+   "h": 14,
+   "type": "chart",
+   "name": "Recycling vs Price",
+   "description": "Recycled gold as a share of total supply against the gold price, dual axis, with the correlation computed over the full window and stated on the chart. Scrap is the most price-elastic part of the supply stack.",
+   "explain": "Recycled gold as a percentage of total supply, alongside the gold price. Recycling is old jewellery and other gold sold back and refined.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_recycle_elasticity.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_aisc",
+   "x": 0,
+   "y": 285,
+   "w": 20,
+   "h": 14,
+   "type": "chart",
+   "name": "All-in Sustaining Cost vs Price",
+   "description": "Industry AISC over time with the quarterly average gold price overlaid; the shaded gap is the industry margin.",
+   "explain": "All-in sustaining cost (AISC): the industry-average cost of producing an ounce of gold, including mining, sustaining capital, overheads and royalties, compared with the average gold price in the same quarter.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_aisc.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_cost_curve",
+   "x": 20,
+   "y": 285,
+   "w": 20,
+   "h": 14,
+   "type": "chart",
+   "name": "Industry Cost Curve",
+   "description": "Cumulative share of global production against all-in sustaining cost, with a spot-price reference line and the share of production above water annotated.",
+   "explain": "Global mines ranked from cheapest to most expensive by all-in sustaining cost per ounce, against the cumulative share of world production. The spot price line shows which mines are profitable at today's price.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_cost_curve.json"
+   },
+   "light": true
+  },
+  {
+   "id": "gd_miners",
+   "x": 0,
+   "y": 299,
+   "w": 40,
+   "h": 18,
+   "type": "table",
+   "name": "Gold Producers & Royalties \u2014 Screener",
+   "description": "Live sortable screener across the major producers and royalty/streaming names. Net debt/EBITDA is derived from enterprise value and EV/EBITDA (yfinance does not report it directly). Gold \u03b2 is a 3-year weekly regression against GC=F. Two data caveats worth knowing: Barrick is listed here as B, not GOLD \u2014 yfinance's GOLD ticker now returns a stale shell with a $1bn market cap. And yfinance enterprise values for South-Africa-domiciled ADRs are unreliable; EV-derived columns are blanked for non-USD filers, and Gold Fields' EV/EBITDA should be treated with suspicion even though it reports in USD.",
+   "explain": "Valuation, leverage and profitability for major gold miners and royalty companies: market cap, one-year return, P/E, EV/EBITDA, net debt to EBITDA, EBITDA margin, and gold beta (how much each stock tends to move per 1% move in gold).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "gd_miners.json"
+   }
+  }
+ ]
+}

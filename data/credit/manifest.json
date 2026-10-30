@@ -1,0 +1,655 @@
+{
+ "slug": "credit",
+ "name": "Credit & Debt",
+ "blurb": "Corporate credit, consumer credit and US government debt: leverage, ratings, defaults, spreads, household debt and federal borrowing.",
+ "sources": "Federal Reserve (Z.1 Financial Accounts, SLOOS, G.19, excess bond premium, Distributional Financial Accounts); BIS; ICE BofA and Moody's via FRED; New York Fed Household Debt and Credit Report; U.S. Treasury Fiscal Data; BEA; S&P Global Ratings 2024 annual default study (curated).",
+ "description": "Corporate credit, consumer credit and US government debt in one view: corporate leverage, rating mix, defaults and spreads; household debt by type, delinquency, home equity and the stock-market wealth effect; federal debt, deficits, interest costs, debt composition, holders and auctions. Keyless data: FRED, NY Fed, Federal Reserve, U.S. Treasury Fiscal Data; curated S&P annual default study tables.",
+ "generated_at": "2026-10-30T17:01:35+00:00",
+ "groups": [],
+ "tiles": [
+  {
+   "id": "cr_hdr_corp",
+   "x": 0,
+   "y": 0,
+   "w": 40,
+   "h": 3,
+   "type": "markdown",
+   "name": "\u2460 Corporate credit",
+   "description": "\u2460 Corporate credit section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_hdr_corp.json"
+   }
+  },
+  {
+   "id": "cr_corp_debt_gdp",
+   "x": 0,
+   "y": 3,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Corporate Debt as % of GDP",
+   "description": "Debt of US nonfinancial corporations relative to GDP (BIS).",
+   "explain": "The total debt of US nonfinancial companies (loans plus bonds) divided by the size of the economy (GDP). It's the standard measure of how leveraged the corporate sector is relative to the income the economy generates.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_corp_debt_gdp.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_corp_debt_mix",
+   "x": 20,
+   "y": 3,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Corporate Debt: Bonds vs Loans",
+   "description": "Total nonfinancial corporate debt in $ trillions, split into bonds and loans (Fed Z.1).",
+   "explain": "Total debt owed by US nonfinancial companies in dollars, split between bonds and other debt securities sold to investors, and loans from banks and other lenders.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_corp_debt_mix.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_corp_debt_equity",
+   "x": 0,
+   "y": 16,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Corporate Debt vs Equity Value",
+   "description": "Nonfinancial corporate debt as a % of the market value of their equity (Fed Z.1).",
+   "explain": "Nonfinancial companies' total debt as a percentage of the market value of their shares. It measures leverage against what investors think the companies are worth rather than against GDP.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_corp_debt_equity.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_rating_mix",
+   "x": 20,
+   "y": 16,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Rating Mix: AAA to CCC",
+   "description": "Share of S&P-rated corporate issuers in each rating grade at the start of 2020, 2022 and 2024. Curated from S&P's annual study.",
+   "explain": "The share of companies rated by S&P Global Ratings that sit in each credit rating grade, from AAA (strongest) to CCC/C (weakest). BBB and above is investment grade; BB and below is speculative grade, often called high yield or junk.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_rating_mix.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_default_by_grade",
+   "x": 0,
+   "y": 29,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Default Rates by Rating Grade",
+   "description": "Annual default rates for BBB, BB, B and CCC/C issuers since 1981. Curated from S&P's annual study.",
+   "explain": "The share of companies in each rating grade at the start of a year that defaulted during that year. Defaulting means missing a payment, entering bankruptcy, or swapping debt for less than was promised (a distressed exchange).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_default_by_grade.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_rating_changes",
+   "x": 20,
+   "y": 29,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Upgrades vs Downgrades",
+   "description": "Share of rated issuers upgraded, downgraded and defaulting each year since 1981. Curated from S&P's annual study.",
+   "explain": "The share of S&P-rated companies whose rating was raised, cut, or that defaulted during each year. More downgrades than upgrades signals deteriorating credit quality.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_rating_changes.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_sector_defaults",
+   "x": 0,
+   "y": 42,
+   "w": 40,
+   "h": 14,
+   "type": "chart",
+   "name": "Default Rates by Sector",
+   "description": "2024 default rate by sector against its 1981\u20132024 average. Curated from S&P's annual study.",
+   "explain": "The share of rated companies in each industry that defaulted during the year, compared with that industry's average default rate since 1981.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_sector_defaults.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_spreads_rating",
+   "x": 0,
+   "y": 56,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Credit Spreads by Rating",
+   "description": "ICE BofA option-adjusted spreads for AAA, BBB, BB and CCC-and-lower US corporate bonds (log scale).",
+   "explain": "The extra yield a corporate bond pays over a Treasury of similar maturity, after adjusting for any embedded options (the option-adjusted spread), for bonds rated AAA, BBB, BB, and CCC or lower. Wider spreads mean investors demand more compensation for default risk.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_spreads_rating.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_baa_aaa",
+   "x": 20,
+   "y": 56,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Long-Run Credit Spread: Baa \u2212 Aaa",
+   "description": "Moody's Baa minus Aaa corporate bond yield since 1919, with recession shading.",
+   "explain": "The yield on Moody's Baa-rated corporate bonds (the lowest investment-grade tier) minus the yield on Aaa-rated bonds (the highest). The gap is a long-running gauge of how much extra return investors want for weaker credit.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_baa_aaa.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_ebp",
+   "x": 0,
+   "y": 69,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Excess Bond Premium",
+   "description": "The Fed's excess bond premium and the GZ credit spread it is derived from, since 1973.",
+   "explain": "The excess bond premium is the part of corporate bond spreads not explained by companies' expected default risk; it reflects investors' appetite for risk. It's derived from the GZ credit spread, a broad average spread on corporate bonds, developed by Fed economists Gilchrist and Zakraj\u0161ek.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_ebp.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_sloos",
+   "x": 20,
+   "y": 69,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Bank Lending Standards (C&I)",
+   "description": "Net share of banks tightening business-loan standards, and reporting stronger demand (Fed SLOOS).",
+   "explain": "From the Fed's Senior Loan Officer Opinion Survey: the share of banks tightening their lending standards on commercial and industrial loans to large and mid-sized firms, minus the share easing them, and the same net share reporting stronger loan demand.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_sloos.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_biz_loan_stress",
+   "x": 0,
+   "y": 82,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Business Loan Delinquency & Charge-offs",
+   "description": "Delinquency and charge-off rates on business loans at US commercial banks.",
+   "explain": "The share of business loans at US banks that are 30 or more days past due (delinquency), and the annualized share written off as losses (charge-offs).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_biz_loan_stress.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_st_funding",
+   "x": 20,
+   "y": 82,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Bank Loans vs Commercial Paper",
+   "description": "Commercial & industrial loans at banks and commercial paper outstanding, $ trillions.",
+   "explain": "Two sources of short-term business funding: commercial and industrial loans on bank balance sheets, and commercial paper, which is short-term unsecured debt companies sell directly to investors.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_st_funding.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_hdr_consumer",
+   "x": 0,
+   "y": 95,
+   "w": 40,
+   "h": 3,
+   "type": "markdown",
+   "name": "\u2461 Consumer credit",
+   "description": "\u2461 Consumer credit section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_hdr_consumer.json"
+   }
+  },
+  {
+   "id": "cr_hh_debt_mix",
+   "x": 0,
+   "y": 98,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Household Debt by Type",
+   "description": "Mortgage, home equity, auto, credit card, student and other household debt, $ trillions (NY Fed).",
+   "explain": "Total household debt by type: first mortgages, home equity lines of credit (HELOCs), auto loans, credit cards, student loans and other consumer debt, from credit-bureau data compiled by the New York Fed.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_hh_debt_mix.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_hh_delinq",
+   "x": 20,
+   "y": 98,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Serious Delinquency by Loan Type",
+   "description": "Share of each loan type's balance that is 90+ days late (NY Fed).",
+   "explain": "The share of each type of household debt that is seriously delinquent, meaning 90 or more days past due. Student loan delinquency is near zero from 2020 to early 2025 because missed federal student loan payments weren't reported to credit bureaus during the pandemic payment pause and the year-long 'on-ramp' after it.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_hh_delinq.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_home_equity",
+   "x": 0,
+   "y": 111,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Mortgage Debt vs Home Equity",
+   "description": "Household real estate split into mortgage debt and owners' equity, $ trillions (Fed Z.1).",
+   "explain": "The value of households' real estate split into what they still owe on mortgages and what they own outright (owners' equity). Equity as a share of home value shows how much cushion homeowners have.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_home_equity.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_hh_wealth",
+   "x": 20,
+   "y": 111,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Household Net Worth & Stock Holdings",
+   "description": "Household net worth and directly held corporate equities, $ trillions (Fed Z.1).",
+   "explain": "Household net worth is everything households own minus everything they owe. Directly held corporate equities are the stocks households own themselves, outside retirement and mutual funds. Rising stock wealth tends to encourage more spending, which is known as the wealth effect.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_hh_wealth.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_saving_rate",
+   "x": 0,
+   "y": 124,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Personal Saving Rate",
+   "description": "Personal saving as a % of disposable income (BEA).",
+   "explain": "The share of after-tax (disposable) income that households save rather than spend.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_saving_rate.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_equity_owners",
+   "x": 20,
+   "y": 124,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Who Owns the Stocks",
+   "description": "Share of household stocks and mutual funds held by each wealth group (Fed DFA).",
+   "explain": "How household holdings of stocks and mutual funds are divided between wealth groups: the top 1% of households by wealth, the next 9%, the next 40%, and the bottom 50%.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_equity_owners.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_cards",
+   "x": 0,
+   "y": 137,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Credit Cards: Rate, Delinquency & Charge-offs",
+   "description": "Average credit card interest rate, and card delinquency and charge-off rates at banks.",
+   "explain": "The average interest rate charged on credit card accounts, and the share of card balances at banks that are 30 or more days past due (delinquency) or written off as losses (charge-offs).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_cards.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_auto",
+   "x": 20,
+   "y": 137,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Auto Loans: Rate & Delinquency",
+   "description": "Bank rate on a 60-month new-car loan, and share of auto debt 90+ days late (NY Fed).",
+   "explain": "The average interest rate banks charge on a 60-month loan for a new car, and the share of all auto loan balances that are 90 or more days past due.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_auto.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_dsr",
+   "x": 0,
+   "y": 150,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Household Debt Service Burden",
+   "description": "Household debt payments as a % of disposable income: total, mortgage and consumer (Fed).",
+   "explain": "Required household debt payments (principal and interest) as a share of disposable income, in total and split between mortgage debt and consumer debt.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_dsr.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_foreclosure_bk",
+   "x": 20,
+   "y": 150,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "New Foreclosures & Bankruptcies",
+   "description": "Consumers with a new foreclosure or bankruptcy each quarter, thousands (NY Fed).",
+   "explain": "The number of consumers with a new foreclosure (a lender taking back a home) or a new bankruptcy notation on their credit report each quarter.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_foreclosure_bk.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_hdr_govt",
+   "x": 0,
+   "y": 163,
+   "w": 40,
+   "h": 3,
+   "type": "markdown",
+   "name": "\u2462 US government debt",
+   "description": "\u2462 US government debt section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_hdr_govt.json"
+   }
+  },
+  {
+   "id": "cr_gov_debt",
+   "x": 0,
+   "y": 166,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Federal Debt Outstanding",
+   "description": "Total public debt, split into debt held by the public and intragovernmental holdings (Treasury, Debt to the Penny).",
+   "explain": "Total US federal debt outstanding. Debt held by the public is owed to outside investors, including the Federal Reserve and foreign governments; intragovernmental debt is owed to federal trust funds such as Social Security.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_debt.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_gov_debt_gdp",
+   "x": 20,
+   "y": 166,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Federal Debt as % of GDP",
+   "description": "Total federal debt relative to GDP.",
+   "explain": "Total federal debt divided by the size of the economy (GDP), the standard measure of the government's debt burden.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_debt_gdp.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_gov_deficit",
+   "x": 0,
+   "y": 179,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Federal Surplus / Deficit",
+   "description": "Annual federal budget surplus or deficit by fiscal year, $ trillions.",
+   "explain": "The federal government's revenue minus its spending in each fiscal year (which ends September 30). A negative number is a deficit, which has to be financed by borrowing.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_deficit.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_gov_interest",
+   "x": 20,
+   "y": 179,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Federal Interest Payments",
+   "description": "Federal government interest payments at an annual rate, $ trillions (BEA).",
+   "explain": "Interest the federal government pays on its debt, expressed as an annual rate.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_interest.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_gov_interest_share",
+   "x": 0,
+   "y": 192,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Interest as % of Federal Revenue",
+   "description": "Federal interest payments divided by federal current receipts (BEA).",
+   "explain": "Federal interest payments as a share of federal current receipts (taxes and other income). It shows how much of each dollar of revenue goes to servicing the debt.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_interest_share.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_gov_avg_rate",
+   "x": 20,
+   "y": 192,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Average Rate Treasury Pays",
+   "description": "Average interest rate on outstanding marketable Treasury debt, by security type (Treasury).",
+   "explain": "The average interest rate the Treasury pays on its outstanding marketable debt, overall and by security type. It changes slowly because old debt only reprices when it matures and is refinanced.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_avg_rate.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_gov_debt_mix",
+   "x": 0,
+   "y": 205,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "What the Debt Is Made Of",
+   "description": "Marketable Treasury debt split into bills, notes, bonds, TIPS and floating-rate notes (MSPD).",
+   "explain": "Marketable Treasury debt by type: bills (one year or less), notes (2 to 10 years), bonds (20 to 30 years), TIPS (inflation-protected) and floating-rate notes, as a share of the total.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_debt_mix.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_gov_holders",
+   "x": 20,
+   "y": 205,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Who Holds Treasury Debt",
+   "description": "Debt held by the public split between the Fed, foreign holders and everyone else, $ trillions.",
+   "explain": "Treasury debt held by the public, split between the Federal Reserve, foreign and international investors, and all other domestic holders such as banks, funds, pensions and individuals.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_holders.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_gov_term_premium",
+   "x": 0,
+   "y": 218,
+   "w": 20,
+   "h": 14,
+   "type": "chart",
+   "name": "Term Premium & Real Yield",
+   "description": "Kim-Wright 10-year term premium and the 10-year TIPS real yield.",
+   "explain": "The term premium is the extra yield investors demand to hold a 10-year Treasury instead of rolling over short-term bills (Kim-Wright model estimate). The real yield is the 10-year yield on inflation-protected Treasuries (TIPS), a return after inflation.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_term_premium.json"
+   },
+   "light": true
+  },
+  {
+   "id": "cr_gov_auctions",
+   "x": 20,
+   "y": 218,
+   "w": 20,
+   "h": 14,
+   "type": "table",
+   "name": "Recent Treasury Auctions",
+   "description": "Treasury auctions over the past 60 days: yield, bid-to-cover, indirect bidder share and size.",
+   "explain": "Recent Treasury auctions. Bid-to-cover is the total amount bid divided by the amount sold, a gauge of demand. Indirect bidders are mostly foreign central banks and other investors bidding through dealers.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "cr_gov_auctions.json"
+   }
+  }
+ ]
+}

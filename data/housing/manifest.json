@@ -1,0 +1,1067 @@
+{
+ "slug": "housing",
+ "name": "Housing & SF Real Estate",
+ "blurb": "US housing macro down to San Francisco ZIP codes: prices, momentum, rents and gross yields.",
+ "sources": "FRED (S&P CoreLogic Case-Shiller, Realtor.com, Freddie Mac, BLS); Zillow Research (ZHVI, ZORI); Redfin Data Center.",
+ "description": "US housing macro up top, then a San Francisco deep-dive down to the neighborhood. Investor/yield + market-analyst lens: Case-Shiller US & SF, mortgage rates, starts/permits, sales & delinquency; SF single-family-vs-condo divergence, median sale price by property type, bidding-war gauge (sale-to-list & % over ask), inventory/DOM/price-cuts, Realtor.com SF-MSA listings; SF rent, gross rental yield, price-vs-rent; a sortable per-ZIP value/growth/yield table with a neighborhood drill-down; and the SF labor backdrop. Keyless data: FRED, Zillow Research, Redfin Data Center.",
+ "generated_at": "2026-10-30T17:01:35+00:00",
+ "groups": [
+  {
+   "name": "zip",
+   "label": "SF Neighborhood",
+   "default": "94110",
+   "options": [
+    {
+     "label": "Bayview / Hunters Point \u00b7 94124",
+     "value": "94124"
+    },
+    {
+     "label": "Castro / Noe Valley \u00b7 94114",
+     "value": "94114"
+    },
+    {
+     "label": "Chinatown / Nob Hill \u00b7 94108",
+     "value": "94108"
+    },
+    {
+     "label": "Embarcadero / SoMa \u00b7 94105",
+     "value": "94105"
+    },
+    {
+     "label": "Financial District \u00b7 94104",
+     "value": "94104"
+    },
+    {
+     "label": "Financial District / Embarcadero \u00b7 94111",
+     "value": "94111"
+    },
+    {
+     "label": "Glen Park / Twin Peaks \u00b7 94131",
+     "value": "94131"
+    },
+    {
+     "label": "Haight-Ashbury / Cole Valley \u00b7 94117",
+     "value": "94117"
+    },
+    {
+     "label": "Hayes Valley / Tenderloin \u00b7 94102",
+     "value": "94102"
+    },
+    {
+     "label": "Ingleside / Excelsior \u00b7 94112",
+     "value": "94112"
+    },
+    {
+     "label": "Inner Richmond \u00b7 94118",
+     "value": "94118"
+    },
+    {
+     "label": "Lakeshore / Stonestown \u00b7 94132",
+     "value": "94132"
+    },
+    {
+     "label": "Marina / Cow Hollow \u00b7 94123",
+     "value": "94123"
+    },
+    {
+     "label": "Mission / Bernal Heights \u00b7 94110",
+     "value": "94110"
+    },
+    {
+     "label": "Mission Bay \u00b7 94158",
+     "value": "94158"
+    },
+    {
+     "label": "Nob Hill / Russian Hill \u00b7 94109",
+     "value": "94109"
+    },
+    {
+     "label": "North Beach / Telegraph Hill \u00b7 94133",
+     "value": "94133"
+    },
+    {
+     "label": "Outer Richmond \u00b7 94121",
+     "value": "94121"
+    },
+    {
+     "label": "Pacific Heights / Western Addition \u00b7 94115",
+     "value": "94115"
+    },
+    {
+     "label": "Potrero Hill / Dogpatch \u00b7 94107",
+     "value": "94107"
+    },
+    {
+     "label": "Presidio \u00b7 94129",
+     "value": "94129"
+    },
+    {
+     "label": "SoMa \u00b7 94103",
+     "value": "94103"
+    },
+    {
+     "label": "Sunset \u00b7 94122",
+     "value": "94122"
+    },
+    {
+     "label": "Sunset / Parkside \u00b7 94116",
+     "value": "94116"
+    },
+    {
+     "label": "Visitacion Valley \u00b7 94134",
+     "value": "94134"
+    },
+    {
+     "label": "West Portal / St. Francis Wood \u00b7 94127",
+     "value": "94127"
+    }
+   ]
+  }
+ ],
+ "tiles": [
+  {
+   "id": "re_hdr_read",
+   "x": 0,
+   "y": 0,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "SF Market Read",
+   "description": "SF Market Read section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_hdr_read.json"
+   }
+  },
+  {
+   "id": "re_market_read",
+   "x": 0,
+   "y": 2,
+   "w": 40,
+   "h": 9,
+   "type": "markdown",
+   "name": "SF Market Read",
+   "description": "Auto-generated momentum & yield summary for San Francisco. Recomputed from live data.",
+   "explain": "A written summary generated from the latest housing data for San Francisco: price momentum, how competitive sales are, inventory and rental yields.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_market_read.json"
+   },
+   "stale": true
+  },
+  {
+   "id": "re_hdr_usmacro",
+   "x": 0,
+   "y": 11,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "US Housing Macro \u2014 the national backdrop",
+   "description": "US Housing Macro \u2014 the national backdrop section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_hdr_usmacro.json"
+   }
+  },
+  {
+   "id": "re_us_caseshiller",
+   "x": 0,
+   "y": 13,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "US Case-Shiller (level + YoY)",
+   "description": "National S&P/Case-Shiller home price index with YoY % (right axis) and recession shading.",
+   "explain": "The S&P CoreLogic Case-Shiller US National Home Price Index, which tracks repeat sales of the same single-family homes to measure price changes, shown as a level and as the year-over-year change.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_us_caseshiller.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_us_mortgage",
+   "x": 20,
+   "y": 13,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Mortgage Rates & Spread",
+   "description": "30Y & 15Y fixed mortgage rates and the 30Y-minus-10Y-Treasury spread.",
+   "explain": "Average 30-year and 15-year fixed mortgage rates (Freddie Mac), and the spread of the 30-year rate over the 10-year Treasury yield, which reflects lender margins and prepayment risk.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_us_mortgage.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_us_supply",
+   "x": 0,
+   "y": 26,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "Housing Starts & Permits",
+   "description": "New housing starts and building permits (000s SAAR) with recession shading.",
+   "explain": "Housing starts (new homes on which construction began) and building permits (homes authorized to be built), as seasonally adjusted annual rates in thousands of units.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_us_supply.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_us_sales",
+   "x": 20,
+   "y": 26,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "New Home Sales & Months' Supply",
+   "description": "New single-family home sales (000s SAAR) with months' supply of new homes (right axis).",
+   "explain": "New single-family homes sold each month, expressed as a seasonally adjusted annual rate in thousands, from the Census Bureau. Months' supply is how long the current inventory of new homes for sale would last at the current sales pace.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_us_sales.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_us_listings",
+   "x": 0,
+   "y": 39,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "US Listings & Days on Market",
+   "description": "Realtor.com national active listing count with median days on market (right axis).",
+   "explain": "Realtor.com's count of active for-sale listings nationwide, and the median number of days a listing stays on the market.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_us_listings.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_us_delinquency",
+   "x": 20,
+   "y": 39,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Mortgage Delinquency Rate",
+   "description": "Delinquency rate on single-family residential mortgages, with recession shading.",
+   "explain": "The share of single-family residential mortgages held by US banks that are 30 or more days past due.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_us_delinquency.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_hdr_sfprice",
+   "x": 0,
+   "y": 51,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "SF Prices",
+   "description": "SF Prices section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_hdr_sfprice.json"
+   }
+  },
+  {
+   "id": "re_sf_caseshiller",
+   "x": 0,
+   "y": 53,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "SF Case-Shiller (level + YoY)",
+   "description": "San Francisco S&P/Case-Shiller home price index with YoY % (right axis) and recession shading.",
+   "explain": "The S&P CoreLogic Case-Shiller Home Price Index for the San Francisco metro area, based on repeat sales of the same homes, as a level and as the year-over-year change.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_caseshiller.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_sf_sfr_condo",
+   "x": 20,
+   "y": 53,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "SF: Single-Family vs Condo",
+   "description": "SF-metro Zillow ZHVI for single-family vs condo, indexed to 100 at Jan-2019 \u2014 the divergence story.",
+   "explain": "The Zillow Home Value Index (ZHVI, the typical home value in a region) for single-family homes and for condos in the SF metro, each rebased so January 2019 equals 100.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_sfr_condo.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_sf_zhvi_levels",
+   "x": 0,
+   "y": 66,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "SF Typical Home Value",
+   "description": "SF-metro typical home value (Zillow ZHVI) with FHFA SF index scaled alongside.",
+   "explain": "The typical home value in the SF metro from Zillow (ZHVI), alongside the FHFA house price index for the San Francisco\u2013San Mateo\u2013Redwood City area, rescaled to the same units.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_zhvi_levels.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_hdr_sfactivity",
+   "x": 0,
+   "y": 78,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "SF Market Activity & Momentum",
+   "description": "SF Market Activity & Momentum section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_hdr_sfactivity.json"
+   }
+  },
+  {
+   "id": "re_sf_saleprice",
+   "x": 0,
+   "y": 80,
+   "w": 40,
+   "h": 13,
+   "type": "chart",
+   "name": "SF Median Sale Price by Type",
+   "description": "Redfin SF-metro median sale price for single-family, condo, 2-4 unit, and all residential.",
+   "explain": "The median price homes actually sold for in the SF metro, by property type, from Redfin.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_saleprice.json"
+   },
+   "light": true,
+   "stale": true
+  },
+  {
+   "id": "re_sf_heat",
+   "x": 0,
+   "y": 93,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "SF Bidding-War Gauge",
+   "description": "Sale-to-list ratio and % of homes sold above list \u2014 the SF over-ask heat gauge (Redfin).",
+   "explain": "Two measures of buyer competition: the sale-to-list ratio (final sale price divided by asking price) and the share of homes that sold above their asking price.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_heat.json"
+   },
+   "light": true,
+   "stale": true
+  },
+  {
+   "id": "re_sf_flow",
+   "x": 20,
+   "y": 93,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "SF Sales, Listings & Inventory",
+   "description": "Homes sold, new listings, active inventory and months-of-supply (Redfin SF metro).",
+   "explain": "Market volume in the SF metro: homes sold, new listings added, active inventory, and months of supply (how long inventory would last at the current sales pace).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_flow.json"
+   },
+   "light": true,
+   "stale": true
+  },
+  {
+   "id": "re_sf_dom_drops",
+   "x": 0,
+   "y": 106,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "SF Days on Market & Price Cuts",
+   "description": "Median days on market and share of listings with a price drop (Redfin SF metro).",
+   "explain": "Median days a home sits on the market before going under contract, and the share of listings that cut their asking price.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_dom_drops.json"
+   },
+   "light": true,
+   "stale": true
+  },
+  {
+   "id": "re_sf_fred_listings",
+   "x": 20,
+   "y": 106,
+   "w": 20,
+   "h": 13,
+   "type": "chart",
+   "name": "SF-MSA Listings & $/sqft",
+   "description": "Realtor.com SF-MSA active listing count and median list price per square foot (FRED).",
+   "explain": "Realtor.com data for the SF metro: the number of active listings and the median asking price per square foot.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_fred_listings.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_hdr_sfyield",
+   "x": 0,
+   "y": 119,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "SF Rent & Yield",
+   "description": "SF Rent & Yield section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_hdr_sfyield.json"
+   }
+  },
+  {
+   "id": "re_sf_rent",
+   "x": 0,
+   "y": 121,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "SF Rent (ZORI + CPI)",
+   "description": "SF-metro typical asking rent (Zillow ZORI) with SF-Oakland rent CPI (right axis).",
+   "explain": "Zillow's Observed Rent Index (ZORI, the typical asking rent for new leases) for the SF metro, alongside the rent component of CPI for San Francisco\u2013Oakland, which also covers existing leases.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_rent.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_sf_yield",
+   "x": 20,
+   "y": 121,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "SF Gross Rental Yield",
+   "description": "Citywide gross rental yield = annualized ZORI rent \u00f7 ZHVI value. Gross proxy.",
+   "explain": "Gross rental yield: a year of typical rent divided by the typical home value. It's a before-cost measure, ignoring taxes, insurance, maintenance and vacancy.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_yield.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_sf_price_vs_rent",
+   "x": 0,
+   "y": 133,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "SF Price vs Rent Growth",
+   "description": "SF-metro home value vs rent, both indexed to 100 at Jan-2019 \u2014 which is outrunning which.",
+   "explain": "SF-metro typical home values and typical rents, each rebased so January 2019 equals 100, to compare how fast each is growing.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_price_vs_rent.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_hdr_explorer",
+   "x": 0,
+   "y": 145,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "SF Neighborhood Explorer",
+   "description": "SF Neighborhood Explorer section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_hdr_explorer.json"
+   }
+  },
+  {
+   "id": "re_zip_table",
+   "x": 0,
+   "y": 147,
+   "w": 40,
+   "h": 18,
+   "type": "table",
+   "name": "SF Neighborhoods \u2014 Value, Growth & Yield",
+   "description": "Every SF ZIP: typical home value, 1-year change, typical rent, and computed gross yield. Click a column header to rank.",
+   "explain": "For every San Francisco ZIP code: typical home value (Zillow ZHVI), its one-year change, typical asking rent (Zillow ZORI), and gross rental yield (a year of rent divided by home value).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_zip_table.json"
+   }
+  },
+  {
+   "id": "re_zip_value",
+   "x": 0,
+   "y": 165,
+   "w": 14,
+   "h": 13,
+   "type": "chart",
+   "name": "Neighborhood Home Value",
+   "description": "Home-value history for the selected SF neighborhood (ZIP).",
+   "explain": "The typical home value (Zillow ZHVI) in the selected San Francisco ZIP code.",
+   "params": [
+    {
+     "name": "zip",
+     "label": "SF neighborhood",
+     "options": [
+      {
+       "label": "Bayview / Hunters Point \u00b7 94124",
+       "value": "94124"
+      },
+      {
+       "label": "Castro / Noe Valley \u00b7 94114",
+       "value": "94114"
+      },
+      {
+       "label": "Chinatown / Nob Hill \u00b7 94108",
+       "value": "94108"
+      },
+      {
+       "label": "Embarcadero / SoMa \u00b7 94105",
+       "value": "94105"
+      },
+      {
+       "label": "Financial District \u00b7 94104",
+       "value": "94104"
+      },
+      {
+       "label": "Financial District / Embarcadero \u00b7 94111",
+       "value": "94111"
+      },
+      {
+       "label": "Glen Park / Twin Peaks \u00b7 94131",
+       "value": "94131"
+      },
+      {
+       "label": "Haight-Ashbury / Cole Valley \u00b7 94117",
+       "value": "94117"
+      },
+      {
+       "label": "Hayes Valley / Tenderloin \u00b7 94102",
+       "value": "94102"
+      },
+      {
+       "label": "Ingleside / Excelsior \u00b7 94112",
+       "value": "94112"
+      },
+      {
+       "label": "Inner Richmond \u00b7 94118",
+       "value": "94118"
+      },
+      {
+       "label": "Lakeshore / Stonestown \u00b7 94132",
+       "value": "94132"
+      },
+      {
+       "label": "Marina / Cow Hollow \u00b7 94123",
+       "value": "94123"
+      },
+      {
+       "label": "Mission / Bernal Heights \u00b7 94110",
+       "value": "94110"
+      },
+      {
+       "label": "Mission Bay \u00b7 94158",
+       "value": "94158"
+      },
+      {
+       "label": "Nob Hill / Russian Hill \u00b7 94109",
+       "value": "94109"
+      },
+      {
+       "label": "North Beach / Telegraph Hill \u00b7 94133",
+       "value": "94133"
+      },
+      {
+       "label": "Outer Richmond \u00b7 94121",
+       "value": "94121"
+      },
+      {
+       "label": "Pacific Heights / Western Addition \u00b7 94115",
+       "value": "94115"
+      },
+      {
+       "label": "Potrero Hill / Dogpatch \u00b7 94107",
+       "value": "94107"
+      },
+      {
+       "label": "Presidio \u00b7 94129",
+       "value": "94129"
+      },
+      {
+       "label": "SoMa \u00b7 94103",
+       "value": "94103"
+      },
+      {
+       "label": "Sunset \u00b7 94122",
+       "value": "94122"
+      },
+      {
+       "label": "Sunset / Parkside \u00b7 94116",
+       "value": "94116"
+      },
+      {
+       "label": "Visitacion Valley \u00b7 94134",
+       "value": "94134"
+      },
+      {
+       "label": "West Portal / St. Francis Wood \u00b7 94127",
+       "value": "94127"
+      }
+     ]
+    }
+   ],
+   "group": "zip",
+   "default": "zip=94110",
+   "variants": {
+    "zip=94110": "re_zip_value__a521d43541.json",
+    "zip=94124": "re_zip_value__9743564fb3.json",
+    "zip=94114": "re_zip_value__f100c72e2a.json",
+    "zip=94108": "re_zip_value__f1b059a27d.json",
+    "zip=94105": "re_zip_value__8268155e6d.json",
+    "zip=94104": "re_zip_value__e2769a4569.json",
+    "zip=94111": "re_zip_value__159206dea8.json",
+    "zip=94131": "re_zip_value__e47dac9e5c.json",
+    "zip=94117": "re_zip_value__3b902e4ffd.json",
+    "zip=94102": "re_zip_value__4d8a9585dc.json",
+    "zip=94112": "re_zip_value__e6cae6c902.json",
+    "zip=94118": "re_zip_value__ccd2d73057.json",
+    "zip=94132": "re_zip_value__7de5b65f90.json",
+    "zip=94123": "re_zip_value__b07fdcd77b.json",
+    "zip=94158": "re_zip_value__66ad48a2e8.json",
+    "zip=94109": "re_zip_value__8d3ea6b511.json",
+    "zip=94133": "re_zip_value__9cd9972341.json",
+    "zip=94121": "re_zip_value__312a086883.json",
+    "zip=94115": "re_zip_value__9f2dc87119.json",
+    "zip=94107": "re_zip_value__b7b0d91269.json",
+    "zip=94129": "re_zip_value__601ca72991.json",
+    "zip=94103": "re_zip_value__572316fd53.json",
+    "zip=94122": "re_zip_value__e1bb6f56be.json",
+    "zip=94116": "re_zip_value__24933e78a6.json",
+    "zip=94134": "re_zip_value__0ebd746399.json",
+    "zip=94127": "re_zip_value__daad2d00b0.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_zip_rent",
+   "x": 14,
+   "y": 165,
+   "w": 13,
+   "h": 13,
+   "type": "chart",
+   "name": "Neighborhood Rent",
+   "description": "Asking-rent history for the selected SF neighborhood (ZIP).",
+   "explain": "The typical asking rent for new leases (Zillow ZORI) in the selected San Francisco ZIP code.",
+   "params": [
+    {
+     "name": "zip",
+     "label": "SF neighborhood",
+     "options": [
+      {
+       "label": "Bayview / Hunters Point \u00b7 94124",
+       "value": "94124"
+      },
+      {
+       "label": "Castro / Noe Valley \u00b7 94114",
+       "value": "94114"
+      },
+      {
+       "label": "Chinatown / Nob Hill \u00b7 94108",
+       "value": "94108"
+      },
+      {
+       "label": "Embarcadero / SoMa \u00b7 94105",
+       "value": "94105"
+      },
+      {
+       "label": "Financial District \u00b7 94104",
+       "value": "94104"
+      },
+      {
+       "label": "Financial District / Embarcadero \u00b7 94111",
+       "value": "94111"
+      },
+      {
+       "label": "Glen Park / Twin Peaks \u00b7 94131",
+       "value": "94131"
+      },
+      {
+       "label": "Haight-Ashbury / Cole Valley \u00b7 94117",
+       "value": "94117"
+      },
+      {
+       "label": "Hayes Valley / Tenderloin \u00b7 94102",
+       "value": "94102"
+      },
+      {
+       "label": "Ingleside / Excelsior \u00b7 94112",
+       "value": "94112"
+      },
+      {
+       "label": "Inner Richmond \u00b7 94118",
+       "value": "94118"
+      },
+      {
+       "label": "Lakeshore / Stonestown \u00b7 94132",
+       "value": "94132"
+      },
+      {
+       "label": "Marina / Cow Hollow \u00b7 94123",
+       "value": "94123"
+      },
+      {
+       "label": "Mission / Bernal Heights \u00b7 94110",
+       "value": "94110"
+      },
+      {
+       "label": "Mission Bay \u00b7 94158",
+       "value": "94158"
+      },
+      {
+       "label": "Nob Hill / Russian Hill \u00b7 94109",
+       "value": "94109"
+      },
+      {
+       "label": "North Beach / Telegraph Hill \u00b7 94133",
+       "value": "94133"
+      },
+      {
+       "label": "Outer Richmond \u00b7 94121",
+       "value": "94121"
+      },
+      {
+       "label": "Pacific Heights / Western Addition \u00b7 94115",
+       "value": "94115"
+      },
+      {
+       "label": "Potrero Hill / Dogpatch \u00b7 94107",
+       "value": "94107"
+      },
+      {
+       "label": "Presidio \u00b7 94129",
+       "value": "94129"
+      },
+      {
+       "label": "SoMa \u00b7 94103",
+       "value": "94103"
+      },
+      {
+       "label": "Sunset \u00b7 94122",
+       "value": "94122"
+      },
+      {
+       "label": "Sunset / Parkside \u00b7 94116",
+       "value": "94116"
+      },
+      {
+       "label": "Visitacion Valley \u00b7 94134",
+       "value": "94134"
+      },
+      {
+       "label": "West Portal / St. Francis Wood \u00b7 94127",
+       "value": "94127"
+      }
+     ]
+    }
+   ],
+   "group": "zip",
+   "default": "zip=94110",
+   "variants": {
+    "zip=94110": "re_zip_rent__a521d43541.json",
+    "zip=94124": "re_zip_rent__9743564fb3.json",
+    "zip=94114": "re_zip_rent__f100c72e2a.json",
+    "zip=94108": "re_zip_rent__f1b059a27d.json",
+    "zip=94105": "re_zip_rent__8268155e6d.json",
+    "zip=94104": "re_zip_rent__e2769a4569.json",
+    "zip=94111": "re_zip_rent__159206dea8.json",
+    "zip=94131": "re_zip_rent__e47dac9e5c.json",
+    "zip=94117": "re_zip_rent__3b902e4ffd.json",
+    "zip=94102": "re_zip_rent__4d8a9585dc.json",
+    "zip=94112": "re_zip_rent__e6cae6c902.json",
+    "zip=94118": "re_zip_rent__ccd2d73057.json",
+    "zip=94132": "re_zip_rent__7de5b65f90.json",
+    "zip=94123": "re_zip_rent__b07fdcd77b.json",
+    "zip=94158": "re_zip_rent__66ad48a2e8.json",
+    "zip=94109": "re_zip_rent__8d3ea6b511.json",
+    "zip=94133": "re_zip_rent__9cd9972341.json",
+    "zip=94121": "re_zip_rent__312a086883.json",
+    "zip=94115": "re_zip_rent__9f2dc87119.json",
+    "zip=94107": "re_zip_rent__b7b0d91269.json",
+    "zip=94129": "re_zip_rent__601ca72991.json",
+    "zip=94103": "re_zip_rent__572316fd53.json",
+    "zip=94122": "re_zip_rent__e1bb6f56be.json",
+    "zip=94116": "re_zip_rent__24933e78a6.json",
+    "zip=94134": "re_zip_rent__0ebd746399.json",
+    "zip=94127": "re_zip_rent__daad2d00b0.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_zip_yield",
+   "x": 27,
+   "y": 165,
+   "w": 13,
+   "h": 13,
+   "type": "chart",
+   "name": "Neighborhood Gross Yield",
+   "description": "Gross rental yield history for the selected SF neighborhood (ZIP).",
+   "explain": "Gross rental yield in the selected ZIP code: a year of typical rent divided by the typical home value, before costs.",
+   "params": [
+    {
+     "name": "zip",
+     "label": "SF neighborhood",
+     "options": [
+      {
+       "label": "Bayview / Hunters Point \u00b7 94124",
+       "value": "94124"
+      },
+      {
+       "label": "Castro / Noe Valley \u00b7 94114",
+       "value": "94114"
+      },
+      {
+       "label": "Chinatown / Nob Hill \u00b7 94108",
+       "value": "94108"
+      },
+      {
+       "label": "Embarcadero / SoMa \u00b7 94105",
+       "value": "94105"
+      },
+      {
+       "label": "Financial District \u00b7 94104",
+       "value": "94104"
+      },
+      {
+       "label": "Financial District / Embarcadero \u00b7 94111",
+       "value": "94111"
+      },
+      {
+       "label": "Glen Park / Twin Peaks \u00b7 94131",
+       "value": "94131"
+      },
+      {
+       "label": "Haight-Ashbury / Cole Valley \u00b7 94117",
+       "value": "94117"
+      },
+      {
+       "label": "Hayes Valley / Tenderloin \u00b7 94102",
+       "value": "94102"
+      },
+      {
+       "label": "Ingleside / Excelsior \u00b7 94112",
+       "value": "94112"
+      },
+      {
+       "label": "Inner Richmond \u00b7 94118",
+       "value": "94118"
+      },
+      {
+       "label": "Lakeshore / Stonestown \u00b7 94132",
+       "value": "94132"
+      },
+      {
+       "label": "Marina / Cow Hollow \u00b7 94123",
+       "value": "94123"
+      },
+      {
+       "label": "Mission / Bernal Heights \u00b7 94110",
+       "value": "94110"
+      },
+      {
+       "label": "Mission Bay \u00b7 94158",
+       "value": "94158"
+      },
+      {
+       "label": "Nob Hill / Russian Hill \u00b7 94109",
+       "value": "94109"
+      },
+      {
+       "label": "North Beach / Telegraph Hill \u00b7 94133",
+       "value": "94133"
+      },
+      {
+       "label": "Outer Richmond \u00b7 94121",
+       "value": "94121"
+      },
+      {
+       "label": "Pacific Heights / Western Addition \u00b7 94115",
+       "value": "94115"
+      },
+      {
+       "label": "Potrero Hill / Dogpatch \u00b7 94107",
+       "value": "94107"
+      },
+      {
+       "label": "Presidio \u00b7 94129",
+       "value": "94129"
+      },
+      {
+       "label": "SoMa \u00b7 94103",
+       "value": "94103"
+      },
+      {
+       "label": "Sunset \u00b7 94122",
+       "value": "94122"
+      },
+      {
+       "label": "Sunset / Parkside \u00b7 94116",
+       "value": "94116"
+      },
+      {
+       "label": "Visitacion Valley \u00b7 94134",
+       "value": "94134"
+      },
+      {
+       "label": "West Portal / St. Francis Wood \u00b7 94127",
+       "value": "94127"
+      }
+     ]
+    }
+   ],
+   "group": "zip",
+   "default": "zip=94110",
+   "variants": {
+    "zip=94110": "re_zip_yield__a521d43541.json",
+    "zip=94124": "re_zip_yield__9743564fb3.json",
+    "zip=94114": "re_zip_yield__f100c72e2a.json",
+    "zip=94108": "re_zip_yield__f1b059a27d.json",
+    "zip=94105": "re_zip_yield__8268155e6d.json",
+    "zip=94104": "re_zip_yield__e2769a4569.json",
+    "zip=94111": "re_zip_yield__159206dea8.json",
+    "zip=94131": "re_zip_yield__e47dac9e5c.json",
+    "zip=94117": "re_zip_yield__3b902e4ffd.json",
+    "zip=94102": "re_zip_yield__4d8a9585dc.json",
+    "zip=94112": "re_zip_yield__e6cae6c902.json",
+    "zip=94118": "re_zip_yield__ccd2d73057.json",
+    "zip=94132": "re_zip_yield__7de5b65f90.json",
+    "zip=94123": "re_zip_yield__b07fdcd77b.json",
+    "zip=94158": "re_zip_yield__66ad48a2e8.json",
+    "zip=94109": "re_zip_yield__8d3ea6b511.json",
+    "zip=94133": "re_zip_yield__9cd9972341.json",
+    "zip=94121": "re_zip_yield__312a086883.json",
+    "zip=94115": "re_zip_yield__9f2dc87119.json",
+    "zip=94107": "re_zip_yield__b7b0d91269.json",
+    "zip=94129": "re_zip_yield__601ca72991.json",
+    "zip=94103": "re_zip_yield__572316fd53.json",
+    "zip=94122": "re_zip_yield__e1bb6f56be.json",
+    "zip=94116": "re_zip_yield__24933e78a6.json",
+    "zip=94134": "re_zip_yield__0ebd746399.json",
+    "zip=94127": "re_zip_yield__daad2d00b0.json"
+   },
+   "light": true
+  },
+  {
+   "id": "re_hdr_demand",
+   "x": 0,
+   "y": 178,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "SF Demand Backdrop",
+   "description": "SF Demand Backdrop section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_hdr_demand.json"
+   }
+  },
+  {
+   "id": "re_sf_labor",
+   "x": 0,
+   "y": 180,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "SF Employment & Unemployment",
+   "description": "SF-metro unemployment rate and employment level (FRED), with recession shading.",
+   "explain": "The unemployment rate and total employment for the San Francisco metro area, from the Bureau of Labor Statistics.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "re_sf_labor.json"
+   },
+   "light": true
+  }
+ ]
+}
