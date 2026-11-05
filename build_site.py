@@ -51,8 +51,8 @@ SHOWCASE = [
     {
         "name": "Macro Factors",
         "slug": "macro",
-        "blurb": "US rates, credit, inflation, growth, labor and global yields — 20 charts with recession shading.",
-        "sources": "FRED (Federal Reserve Bank of St. Louis) via OpenBB Platform; NBER recession dates.",
+        "blurb": "US rates, credit, inflation, growth, labor, bond and equity supply, and global yields — 25 charts.",
+        "sources": "FRED (Federal Reserve Bank of St. Louis) via OpenBB Platform; NBER recession dates; U.S. Treasury Fiscal Data; Federal Reserve Bank of Philadelphia (Survey of Professional Forecasters); Yahoo Finance.",
         "preview": {"tile": "macro_yield_curve", "kind": "curve", "fmt": "pct",
                     "series": [["Today", "Today"], ["1Y ago", "1 year ago"]],
                     "caption": "US Treasury yield curve"},
