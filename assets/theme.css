@@ -1,0 +1,103 @@
+/* Shared by every page: colour tokens (light by default, dark when the visitor's device
+   asks for it), type, masthead, footer and tooltip. Page-specific rules live in
+   home.css (homepage) and style.css (dashboard pages). */
+:root {
+  color-scheme: light;
+  --bg: #f8f7f3;
+  --card: #ffffff;
+  --ink: #16191d;
+  --ink-2: #4a505a;
+  --muted: #6b7280;
+  --rule: #e2dfd6;
+  --rule-strong: #c9c5b9;
+  --link: #2b5c9e;
+  --s1: #2b5c9e;
+  --s2: #c0702a;
+  --s3: #178a70;
+  --s4: #8f4ca3;
+  --flow: rgba(43, 92, 158, 0.16);
+  --flow-on: rgba(43, 92, 158, 0.38);
+  --bg-2: #efede6;
+  --grid: #ece9e1;
+  --warn: #a8641a;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #111317;
+    --card: #181b20;
+    --ink: #ebe8e1;
+    --ink-2: #b9bcc3;
+    --muted: #8d939d;
+    --rule: #2a2e35;
+    --rule-strong: #3a3f48;
+    --link: #7aa5dc;
+    --s1: #4a86d4;
+    --s2: #c97a2e;
+    --s3: #2f9c86;
+    --s4: #a070c0;
+    --flow: rgba(122, 165, 220, 0.18);
+    --flow-on: rgba(122, 165, 220, 0.42);
+    --bg-2: #1d2026;
+    --grid: #23272e;
+    --warn: #e0a84a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111317; --card: #181b20; --ink: #ebe8e1; --ink-2: #b9bcc3; --muted: #8d939d;
+  --rule: #2a2e35; --rule-strong: #3a3f48; --link: #7aa5dc; --s1: #4a86d4; --s2: #c97a2e; --s3: #2f9c86; --s4: #a070c0;
+  --flow: rgba(122, 165, 220, 0.18); --flow-on: rgba(122, 165, 220, 0.42);
+  --bg-2: #1d2026; --grid: #23272e; --warn: #e0a84a;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.wrap { max-width: 1360px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- masthead ---------- */
+.mast { border-bottom: 1px solid var(--rule); background: var(--bg); position: sticky; top: 0; z-index: 5; }
+.mast-row { display: flex; align-items: center; gap: 20px; height: 56px; }
+.mast-name { font: 600 16px var(--serif); color: var(--ink); letter-spacing: 0.1px; }
+.mast-name:hover { text-decoration: none; }
+.mast-nav { margin-left: auto; display: flex; gap: 22px; font-size: 14px; }
+.mast-nav a { color: var(--ink-2); }
+.mast-nav a:hover { color: var(--ink); }
+.asof.old { color: var(--warn); }
+.asof.old::before { content: "⚠ "; }
+
+.section-label {
+  margin: 0 0 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule-strong);
+  font: 500 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+
+.tip {
+  position: fixed; z-index: 20; pointer-events: none; padding: 7px 10px; border-radius: 4px;
+  background: var(--card); border: 1px solid var(--rule-strong); box-shadow: 0 6px 20px -8px rgba(0,0,0,.3);
+  font-size: 12px; color: var(--ink); white-space: nowrap;
+}
+.tip .d { font: 11px var(--mono); color: var(--muted); margin-bottom: 3px; }
+.tip .r { display: flex; align-items: center; gap: 8px; }
+.tip .r i { width: 10px; height: 2px; border-radius: 1px; }
+.tip .r b { margin-left: auto; padding-left: 12px; font: 500 12px var(--mono); }
+
+.stale-tag { color: var(--warn); font: 12px var(--mono); }
+
+/* ---------- footer ---------- */
+.foot { margin-top: 56px; padding: 26px 0 44px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 12.5px; }
+.foot p { margin: 0; max-width: 820px; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 16px; }
+  .mast-nav { gap: 14px; font-size: 13px; }
+  .mast-name { font-size: 15px; }
+}
+@media (max-width: 400px) {
+  .mast-nav a[href*="github"] { display: none; }
+}

@@ -1,0 +1,527 @@
+{
+ "slug": "macro",
+ "name": "Macro Factors",
+ "blurb": "US rates, inflation, growth, labor, markets, bond and equity supply, and global yields \u2014 23 charts.",
+ "sources": "FRED (Federal Reserve Bank of St. Louis) via OpenBB Platform; NBER recession dates; U.S. Treasury Fiscal Data; Federal Reserve Bank of Philadelphia (Survey of Professional Forecasters); Yahoo Finance.",
+ "description": "US + global macro cockpit \u2014 themed Plotly charts on one scrolling page, grouped into sections. Overlays, NBER recession shading, reference lines, last-value labels, and in-chart 1Y/5Y/20Y range buttons. Data via FRED.",
+ "generated_at": "2026-11-07T18:15:33+00:00",
+ "groups": [],
+ "tiles": [
+  {
+   "id": "macro_hdr_rates",
+   "x": 0,
+   "y": 0,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Rates & Curve",
+   "description": "Rates & Curve section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_rates.json"
+   }
+  },
+  {
+   "id": "macro_yield_curve",
+   "x": 0,
+   "y": 2,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "US Yield Curve",
+   "description": "Treasury curve today vs 1Y & 2Y ago.",
+   "explain": "The yield on US Treasury debt at each maturity, from 3 months to 30 years. A yield is the annual return an investor earns by holding the bond to maturity; plotting every maturity at once gives the shape of the curve.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_yield_curve.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_treasury_yields",
+   "x": 20,
+   "y": 2,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Treasury Yields",
+   "description": "2Y / 10Y / 30Y yields with recession bands.",
+   "explain": "Market yields on 2-, 10- and 30-year US Treasuries. The 2-year mostly tracks expected Fed policy; the 10- and 30-year also price long-run growth, inflation and term risk.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_treasury_yields.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_policy_rates",
+   "x": 0,
+   "y": 14,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Policy Rates",
+   "description": "Fed Funds (EFFR) vs SOFR.",
+   "explain": "The effective federal funds rate (the average rate banks charge each other for overnight reserves, which the Fed targets) and SOFR (the overnight rate on loans secured by Treasuries, the main US lending benchmark).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_policy_rates.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_term_spreads",
+   "x": 20,
+   "y": 14,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Term Spreads",
+   "description": "10Y\u22122Y and 10Y\u22123M; below 0 = inversion.",
+   "explain": "The gap between long- and short-dated Treasury yields: 10-year minus 2-year, and 10-year minus 3-month, in percentage points. Below zero means the curve is inverted.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_term_spreads.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_hdr_inflation",
+   "x": 0,
+   "y": 26,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Inflation",
+   "description": "Inflation section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_inflation.json"
+   }
+  },
+  {
+   "id": "macro_cpi_vs_pce",
+   "x": 0,
+   "y": 28,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "CPI vs Core PCE (YoY)",
+   "description": "Headline CPI, Core CPI, Core PCE with 2% target.",
+   "explain": "Year-over-year inflation on three measures: headline CPI (all consumer prices), core CPI (excluding food and energy) and core PCE (the Fed's preferred gauge, built from a broader basket of spending).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_cpi_vs_pce.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_inflation_expectations",
+   "x": 0,
+   "y": 40,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "Inflation Expectations",
+   "description": "10Y breakeven, 5Y5Y forward, UMich survey.",
+   "explain": "What markets and households expect inflation to be. The 10-year breakeven is the gap between nominal and inflation-protected Treasury yields; the 5y5y forward is expected average inflation five to ten years out; the University of Michigan figure is a consumer survey of the year ahead.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_inflation_expectations.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_hdr_growth",
+   "x": 0,
+   "y": 52,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Growth & Labor",
+   "description": "Growth & Labor section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_growth.json"
+   }
+  },
+  {
+   "id": "macro_real_gdp",
+   "x": 0,
+   "y": 54,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Real GDP (YoY)",
+   "description": "Real GDP year-over-year.",
+   "explain": "Inflation-adjusted US output (gross domestic product) compared with the same quarter a year earlier.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_real_gdp.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_unemployment",
+   "x": 20,
+   "y": 54,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Unemployment",
+   "description": "U-3 vs U-6 unemployment rate.",
+   "explain": "U-3 is the official unemployment rate: people without a job who are actively looking. U-6 adds discouraged workers and people working part-time who want full-time work.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_unemployment.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_payrolls",
+   "x": 0,
+   "y": 66,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Nonfarm Payrolls (\u0394)",
+   "description": "Monthly change in nonfarm payrolls.",
+   "explain": "The monthly change in the number of people on US non-farm payrolls, from the BLS establishment survey, in thousands of jobs.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_payrolls.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_jobless_claims",
+   "x": 20,
+   "y": 66,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Initial Jobless Claims",
+   "description": "Weekly initial unemployment claims.",
+   "explain": "The number of people filing a first claim for unemployment insurance each week. It's one of the most timely signals of layoffs.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_jobless_claims.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_hdr_markets",
+   "x": 0,
+   "y": 78,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Markets",
+   "description": "Markets section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_markets.json"
+   }
+  },
+  {
+   "id": "macro_sp500",
+   "x": 0,
+   "y": 80,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "S&P 500 by Sector",
+   "description": "Share of the S&P 500 in each sector, using SPY holdings, with each sector's one-year price return.",
+   "explain": "How much of the S&P 500 each sector makes up, measured from the holdings of the SPY index fund, because the index is weighted by company size. The label also shows each sector's one-year price return, from its Select Sector SPDR fund. Yahoo's sector groupings differ slightly from the official GICS sectors those funds track.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_sp500.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_vix",
+   "x": 20,
+   "y": 80,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "VIX",
+   "description": "CBOE Volatility Index.",
+   "explain": "The CBOE Volatility Index: the 30-day volatility the options market implies for the S&P 500, quoted as an annualized percentage. Often called the market's fear gauge.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_vix.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_wti",
+   "x": 0,
+   "y": 92,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "WTI Crude Oil",
+   "description": "West Texas Intermediate spot, $/bbl.",
+   "explain": "The spot price of West Texas Intermediate crude, the US benchmark grade of oil, in dollars per barrel.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_wti.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_mortgage",
+   "x": 20,
+   "y": 92,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "30Y Mortgage Rate",
+   "description": "US 30-year fixed mortgage rate.",
+   "explain": "The average rate on a new 30-year fixed-rate mortgage, from Freddie Mac's weekly survey of lenders.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_mortgage.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_hdr_supply",
+   "x": 0,
+   "y": 104,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Supply & Expectations",
+   "description": "Supply & Expectations section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_supply.json"
+   }
+  },
+  {
+   "id": "macro_buyback_pace",
+   "x": 0,
+   "y": 106,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Long-End Treasury Buybacks",
+   "description": "Monthly nominal buybacks in the 10-20Y and 20-30Y buckets, with the annual pace.",
+   "explain": "The face value of older long-dated Treasury bonds that the Treasury buys back each month, in the 10-to-20-year and 20-to-30-year maturity buckets. The annual pace is the last three completed months times four. The dashed line is a pace quoted by macro investor Andy Constan on the Monetary Matters podcast.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_buyback_pace.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_net_long_supply",
+   "x": 20,
+   "y": 106,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Net Long-End Treasury Supply",
+   "description": "Nominal 20Y and 30Y auctions excluding Fed add-ons, minus 10-30Y buybacks.",
+   "explain": "How much long-dated Treasury debt reaches private investors: 20- and 30-year bond auctions, excluding amounts taken by the Federal Reserve, minus long-end buybacks. Inflation-protected bonds are excluded. The dashed line is a figure quoted by Andy Constan on the Monetary Matters podcast.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_net_long_supply.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_net_equity",
+   "x": 0,
+   "y": 118,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Net Equity Issuance (% of GDP)",
+   "description": "Proxy for net stock supply: nonfinancial corporate net issuance relative to GDP. Below zero means net buybacks.",
+   "explain": "A proxy for the net supply of US stock: shares issued minus shares bought back by nonfinancial corporations, from the Fed's Financial Accounts, as a share of GDP. Below zero means companies are retiring more stock than they sell. It excludes financial companies.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_net_equity.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_growth_gap",
+   "x": 20,
+   "y": 118,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Growth: Nowcast vs Forecasters",
+   "description": "Proxy for growth expectations: Atlanta Fed GDPNow against the Philadelphia Fed survey median for the same quarter.",
+   "explain": "A proxy for whether growth expectations look too low or too high: the Atlanta Fed's GDPNow model estimate of real GDP growth, minus the median forecast for the same quarter from the Philadelphia Fed's Survey of Professional Forecasters. GDPNow is a model estimate, not a market price.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_growth_gap.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_vtop",
+   "x": 0,
+   "y": 130,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "10Y V-Top Monitor",
+   "description": "10-year yield, distance below its one-year high, and the zone where a rapid fall would suggest policy intervention.",
+   "explain": "The 10-year Treasury yield and how far it sits below its high of the past year, in basis points (0.01 percentage point). The shaded band is the range Andy Constan named on the Monetary Matters podcast as a sharp fall in yields that would suggest policy intervention.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_vtop.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_hdr_global",
+   "x": 0,
+   "y": 142,
+   "w": 40,
+   "h": 2,
+   "type": "markdown",
+   "name": "Global",
+   "description": "Global section header",
+   "explain": "",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_hdr_global.json"
+   }
+  },
+  {
+   "id": "macro_global_10y",
+   "x": 0,
+   "y": 144,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "Global 10Y Yields",
+   "description": "US, Germany, Japan, UK 10Y government yields.",
+   "explain": "10-year government bond yields for the US, Germany, Japan and the UK: the benchmark long-term borrowing cost in each country.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_global_10y.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_global_cpi",
+   "x": 0,
+   "y": 156,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Global CPI (YoY)",
+   "description": "US, Euro area, Japan CPI YoY.",
+   "explain": "Year-over-year consumer price inflation for the US, the euro area and Japan.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_global_cpi.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_global_policy",
+   "x": 20,
+   "y": 156,
+   "w": 20,
+   "h": 12,
+   "type": "chart",
+   "name": "Global Policy Rates",
+   "description": "Fed vs ECB policy rates.",
+   "explain": "The main policy rate set by the Federal Reserve (effective fed funds rate) and the European Central Bank (deposit facility rate).",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_global_policy.json"
+   },
+   "light": true
+  },
+  {
+   "id": "macro_broad_usd",
+   "x": 0,
+   "y": 168,
+   "w": 40,
+   "h": 12,
+   "type": "chart",
+   "name": "Broad USD Index",
+   "description": "Trade-weighted broad US dollar index.",
+   "explain": "The Federal Reserve's trade-weighted index of the dollar against the currencies of the US's major trading partners. Higher means a stronger dollar.",
+   "params": [],
+   "group": null,
+   "default": "",
+   "variants": {
+    "": "macro_broad_usd.json"
+   },
+   "light": true
+  }
+ ]
+}
